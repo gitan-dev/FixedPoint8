@@ -75,21 +75,6 @@ ReadFixedPoint8,WriteFixedPoint8の処理は[Utf8Json](https://github.com/neuecc
         }
     }
 
-    public sealed class FixedPoint8Formatter : IJsonFormatter<FixedPoint8>
-    {
-        public static readonly FixedPoint8Formatter Default = new();
-
-        public void Serialize(ref JsonWriter writer, FixedPoint8 value, IJsonFormatterResolver formatterResolver)
-        {
-            writer.WriteFixedPoint8(value);
-        }
-
-        public FixedPoint8 Deserialize(ref JsonReader reader, IJsonFormatterResolver formatterResolver)
-        {
-            return reader.ReadFixedPoint8();
-        }
-    }
-
 
 Utf8Jsonを使用してFixedPoint8シリアライズ/デシリアライズする方法を以下に記載します。
 
@@ -851,9 +836,9 @@ byte[]でReader,Writer,Deserialize,Serializeの比較
 |TryWriteChars(Span<byte> ,out int)|現在の整数値インスタンスの値の、指定したbyteスパンへの書式設定を試みます。戻り値は、変換が成功したか失敗したかを示します|
 |WriteChars(ref Span<byte>)|現在の整数値インスタンスの値の、指定したbyteスパンへの書式設定を試みます|
 |ToString(string?, IFormatProvider?)|※速度最適化未実施|
-|Parse(ReadOnlySpan<char>, IFormatProvider?)|読み取り専用のcharを、decimalに変換後、FixedPoint8にキャストします|
+|Parse(ReadOnlySpan<char>, IFormatProvider?)|読み取り専用のcharを、decimalに変換後、FixedPoint8にキャストします※速度最適化未実施|
 |TryParse(ReadOnlySpan<char>, IFormatProvider?, [MaybeNullWhen(false)] out FixedPoint8)|読み取り専用のcharを、decimalに変換後、FixedPoint8にキャストします。戻り値は、変換が成功したか失敗したかを示します|
-|Parse(string, IFormatProvider?)|文字列をdecimalに変換後、FixedPoint8にキャストします|
+|Parse(string, IFormatProvider?)|文字列をdecimalに変換後、FixedPoint8にキャストします※速度最適化未実施|
 |TryParse([NotNullWhen(true)] string?, IFormatProvider?, [MaybeNullWhen(false)] out FixedPoint8)|文字列をdecimalに変換後、FixedPoint8にキャストします。戻り値は、変換が成功したか失敗したかを示します|
 |Round()|最も近い整数に値を丸めます|
 |Round(int)|指定した小数点以下の桁数に値を丸めます|
