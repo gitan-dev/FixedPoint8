@@ -4,6 +4,7 @@ Gitan.FixedPoint8は、固定小数点で-92233720368.54775808～92233720368.547
 内部にInt64をもつstructで、10進数の小数点を誤差なく扱うことができます。
 実行速度が速いことに重点を置いてUTF8との親和性が高いです。
 
+プロジェクトURL : [Gitan.FixedPoint8](https://github.com/gitan-dev/FixedPoint8)
 
 ■ **仕様**
 
@@ -16,7 +17,7 @@ Gitan.FixedPoint8は、固定小数点で-92233720368.54775808～92233720368.547
 
 NuGetパッケージ : Gitan.FixedPoint8
 
-NuGetを使用してFixedPoint8パッケージをインストールします。
+NuGetを使用してGitan.FixedPoint8パッケージをインストールします。
 
 FixedPoint8を使用する方法を以下に記載します。
 
@@ -37,7 +38,7 @@ FixedPoint8を使用する方法を以下に記載します。
 
 NuGetパッケージ : Gitan.Utf8Json_FixedPoint8
 
-NuGetを使用してUtf8Json_FixedPoint8をインストールします。
+NuGetを使用してGitan.Utf8Json_FixedPoint8をインストールします。　※依存関係で[Utf8Json](https://github.com/neuecc/Utf8Json)がインストールされます。
 
 Gitan.Utf8Json_FixedPoint8はJsonとFixedPoint8をRead,Writeします。
 
@@ -91,8 +92,6 @@ ReadFixedPoint8,WriteFixedPoint8の処理は[Utf8Json](https://github.com/neuecc
 
 
 Utf8Jsonを使用してFixedPoint8シリアライズ/デシリアライズする方法を以下に記載します。
-
-実行するには別途NuGetを使用して[Utf8Json](https://github.com/neuecc/Utf8Json)をインストールしてください。
 
     using Gitan.FixedPoint8;
 

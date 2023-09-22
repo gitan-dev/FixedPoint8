@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <PackageId>Gitan.Utf8Json_FixedPoint8</PackageId>
+    <Title>Gitan.Utf8Json_FixedPoint8</Title>
+    <Version>0.9.1</Version>
+    <Authors>Soffice Co., Ltd.</Authors>
+    <Company>Soffice Co., Ltd.</Company>
+    <Product>Gitan.Utf8Json_FixedPoint8</Product>
+    <Description>High Performance Fixed decimal point with 8 digits after the decimal point.</Description>
+    <PackageProjectUrl>https://github.com/gitan-dev/FixedPoint8</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Utf8Json" Version="1.3.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FixedPoint8\FixedPoint8.csproj" />
+  </ItemGroup>
+
+</Project>
