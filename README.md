@@ -4,7 +4,7 @@ Gitan.FixedPoint8は、固定小数点で-92233720368.54775808～92233720368.547
 内部にInt64をもつstructで、10進数の小数点を誤差なく扱うことができます。
 実行速度が速いことに重点を置いてUTF8との親和性が高いです。
 
-プロジェクトURL : [Gitan.FixedPoint8](https://github.com/gitan-dev/FixedPoint8)
+プロジェクトURL : [https://github.com/gitan-dev/FixedPoint8](https://github.com/gitan-dev/FixedPoint8)
 
 ■ **仕様**
 
