@@ -13,8 +13,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
 
     public const int InnerPower = 100_000_000;
 
-    readonly long _innerValue = 0;
-    public long InnerValue => _innerValue;
+    public long InnerValue { get; init; }
 
     public static FixedPoint8 Zero { get; } = new FixedPoint8(0);
 
@@ -28,7 +27,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
 
     public FixedPoint8(long innerValue)
     {
-        _innerValue = innerValue;
+        InnerValue = innerValue;
     }
 
     // ****************************************
@@ -40,17 +39,17 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
         return new FixedPoint8(value);
     }
 
-    public static FixedPoint8 FromDouble(double value)
+    private static FixedPoint8 FromDouble(double value)
     {
         return new FixedPoint8((long)(value * InnerPower + (value > 0 ? 0.5 : -0.5)));
     }
 
-    public static FixedPoint8 FromDecimal(decimal value)
+    private static FixedPoint8 FromDecimal(decimal value)
     {
         return new FixedPoint8((long)(value * InnerPower + (value > 0m ? 0.5m : -0.5m)));
     }
 
-    public static void ThrowException(string value)
+    public static void ThrowFormatException(string value)
     {
         throw new FormatException(value);
     }
@@ -61,7 +60,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
         {
             return result;
         }
-        ThrowException("正しい形式ではありません");
+        ThrowFormatException("正しい形式ではありません");
         return Zero;
     }
 
@@ -71,7 +70,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
         {
             return result;
         }
-        ThrowException("正しい形式ではありません");
+        ThrowFormatException("正しい形式ではありません");
         return Zero;
     }
 
@@ -470,57 +469,57 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
 
     public static explicit operator sbyte(FixedPoint8 value)
     {
-        return (sbyte)(value._innerValue / InnerPower);
+        return (sbyte)(value.InnerValue / InnerPower);
     }
 
     public static explicit operator byte(FixedPoint8 value)
     {
-        return (byte)(value._innerValue / InnerPower);
+        return (byte)(value.InnerValue / InnerPower);
     }
 
     public static explicit operator short(FixedPoint8 value)
     {
-        return (short)(value._innerValue / InnerPower);
+        return (short)(value.InnerValue / InnerPower);
     }
 
     public static explicit operator ushort(FixedPoint8 value)
     {
-        return (ushort)(value._innerValue / InnerPower);
+        return (ushort)(value.InnerValue / InnerPower);
     }
 
     public static explicit operator int(FixedPoint8 value)
     {
-        return (int)(value._innerValue / InnerPower);
+        return (int)(value.InnerValue / InnerPower);
     }
 
     public static explicit operator uint(FixedPoint8 value)
     {
-        return (uint)(value._innerValue / InnerPower);
+        return (uint)(value.InnerValue / InnerPower);
     }
 
     public static explicit operator long(FixedPoint8 value)
     {
-        return value._innerValue / InnerPower;
+        return value.InnerValue / InnerPower;
     }
 
     public static explicit operator ulong(FixedPoint8 value)
     {
-        return (ulong)(value._innerValue / InnerPower);
+        return (ulong)(value.InnerValue / InnerPower);
     }
 
     public static explicit operator float(FixedPoint8 value)
     {
-        return ((float)(value._innerValue)) / InnerPower;
+        return ((float)(value.InnerValue)) / InnerPower;
     }
 
     public static explicit operator double(FixedPoint8 value)
     {
-        return ((double)(value._innerValue)) / InnerPower;
+        return ((double)(value.InnerValue)) / InnerPower;
     }
 
     public static explicit operator decimal(FixedPoint8 value)
     {
-        return ((decimal)(value._innerValue)) / InnerPower;
+        return ((decimal)(value.InnerValue)) / InnerPower;
     }
 
     // ****************************************
@@ -529,83 +528,83 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
 
     public static FixedPoint8 operator +(FixedPoint8 left, FixedPoint8 right)
     {
-        return new FixedPoint8(left._innerValue + right._innerValue);
+        return new FixedPoint8(left.InnerValue + right.InnerValue);
     }
 
     public static FixedPoint8 operator -(FixedPoint8 left, FixedPoint8 right)
     {
-        return new FixedPoint8(left._innerValue - right._innerValue);
+        return new FixedPoint8(left.InnerValue - right.InnerValue);
     }
 
 
     public static FixedPoint8 operator *(FixedPoint8 left, long right)
     {
-        return new FixedPoint8(left._innerValue * right);
+        return new FixedPoint8(left.InnerValue * right);
     }
 
     public static FixedPoint8 operator *(FixedPoint8 left, ulong right)
     {
-        return new FixedPoint8(left._innerValue * (long)right);
+        return new FixedPoint8(left.InnerValue * (long)right);
     }
 
     //速度が出ないので使用は推奨しない
     public static FixedPoint8 operator *(FixedPoint8 left, FixedPoint8 right)
     {
-        var decimalLeft = (decimal)(left._innerValue) / InnerPower;
-        var decimalRight = (decimal)(right._innerValue) / InnerPower;
+        var decimalLeft = (decimal)(left.InnerValue) / InnerPower;
+        var decimalRight = (decimal)(right.InnerValue) / InnerPower;
         return FixedPoint8.FromDecimal(decimalLeft * decimalRight);
     }
 
     public static FixedPoint8 operator /(FixedPoint8 left, long right)
     {
-        return new FixedPoint8(left._innerValue / right);
+        return new FixedPoint8(left.InnerValue / right);
     }
 
     public static FixedPoint8 operator /(FixedPoint8 left, ulong right)
     {
-        return new FixedPoint8(left._innerValue / (long)right);
+        return new FixedPoint8(left.InnerValue / (long)right);
     }
 
     //速度が出ないので使用は推奨しない
     public static FixedPoint8 operator /(FixedPoint8 left, FixedPoint8 right)
     {
-        var decimalLeft = (decimal)(left._innerValue) / InnerPower;
-        var decimalRight = (decimal)(right._innerValue) / InnerPower;
+        var decimalLeft = (decimal)(left.InnerValue) / InnerPower;
+        var decimalRight = (decimal)(right.InnerValue) / InnerPower;
         return FixedPoint8.FromDecimal(decimalLeft / decimalRight);
     }
 
     public static bool operator ==(FixedPoint8 left, FixedPoint8 right)
     {
-        return left._innerValue == right._innerValue;
+        return left.InnerValue == right.InnerValue;
     }
 
     public static bool operator !=(FixedPoint8 left, FixedPoint8 right)
     {
-        return left._innerValue != right._innerValue;
+        return left.InnerValue != right.InnerValue;
     }
 
     public static bool operator <(FixedPoint8 left, FixedPoint8 right)
     {
-        return left._innerValue < right._innerValue;
+        return left.InnerValue < right.InnerValue;
     }
     public static bool operator <=(FixedPoint8 left, FixedPoint8 right)
     {
-        return left._innerValue <= right._innerValue;
+        return left.InnerValue <= right.InnerValue;
     }
 
     public static bool operator >(FixedPoint8 left, FixedPoint8 right)
     {
-        return left._innerValue > right._innerValue;
+        return left.InnerValue > right.InnerValue;
     }
 
     public static bool operator >=(FixedPoint8 left, FixedPoint8 right)
     {
-        return left._innerValue >= right._innerValue;
+        return left.InnerValue >= right.InnerValue;
     }
 
     public static FixedPoint8 operator %(FixedPoint8 left, FixedPoint8 right)
     {
-        return new FixedPoint8(left._innerValue % right._innerValue);
+        return new FixedPoint8(left.InnerValue % right.InnerValue);
     }
 
     public static FixedPoint8 operator ++(FixedPoint8 value)
@@ -636,34 +635,34 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
     public override bool Equals(object? obj)
     {
         return obj is FixedPoint8 fixedPoint8 &&
-               _innerValue == fixedPoint8._innerValue;
+               InnerValue == fixedPoint8.InnerValue;
     }
 
     public bool Equals(FixedPoint8 value)
     {
-        return value._innerValue == _innerValue;
+        return value.InnerValue == InnerValue;
     }
 
     public override int GetHashCode()
     {
-        return _innerValue.GetHashCode();
+        return InnerValue.GetHashCode();
     }
 
     public int CompareTo(object? obj)
     {
-        return obj is FixedPoint8 fixedPoint8 ? _innerValue.CompareTo(fixedPoint8._innerValue) : throw new ArgumentException("obj is not FixedPoint8.");
+        return obj is FixedPoint8 fixedPoint8 ? InnerValue.CompareTo(fixedPoint8.InnerValue) : throw new ArgumentException("obj is not FixedPoint8.");
     }
 
     public int CompareTo(FixedPoint8 other)
     {
-        return _innerValue.CompareTo(other._innerValue);
+        return InnerValue.CompareTo(other.InnerValue);
     }
 
     public static FixedPoint8 Abs(FixedPoint8 value)
     {
-        if (value._innerValue < 0)
+        if (value.InnerValue < 0)
         {
-            return new FixedPoint8(-value._innerValue);
+            return new FixedPoint8(-value.InnerValue);
         }
         return value;
     }
@@ -680,8 +679,8 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
 
     public static bool IsEvenInteger(FixedPoint8 value)
     {
-        long overPoint = value._innerValue / 200_000_000;
-        long underPoint = value._innerValue - overPoint * 200_000_000;
+        long overPoint = value.InnerValue / 200_000_000;
+        long underPoint = value.InnerValue - overPoint * 200_000_000;
         if (underPoint == 0)
         {
             return true;
@@ -706,8 +705,8 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
 
     public static bool IsInteger(FixedPoint8 value)
     {
-        long overPoint = value._innerValue / InnerPower;
-        long underPoint = value._innerValue - overPoint * InnerPower;
+        long overPoint = value.InnerValue / InnerPower;
+        long underPoint = value.InnerValue - overPoint * InnerPower;
         if (underPoint == 0)
         {
             return true;
@@ -722,7 +721,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
 
     public static bool IsNegative(FixedPoint8 value)
     {
-        return value._innerValue < 0;
+        return value.InnerValue < 0;
     }
 
     public static bool IsNegativeInfinity(FixedPoint8 value)
@@ -741,8 +740,8 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
 
     public static bool IsOddInteger(FixedPoint8 value)
     {
-        long overPoint = value._innerValue / 200_000_000;
-        long underPoint = value._innerValue - overPoint * 200_000_000;
+        long overPoint = value.InnerValue / 200_000_000;
+        long underPoint = value.InnerValue - overPoint * 200_000_000;
         if (underPoint == InnerPower || underPoint == -InnerPower)
         {
             return true;
@@ -752,7 +751,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
 
     public static bool IsPositive(FixedPoint8 value)
     {
-        return (value._innerValue >= 0);
+        return (value.InnerValue >= 0);
     }
 
     public static bool IsPositiveInfinity(FixedPoint8 value)
@@ -772,12 +771,12 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
 
     public static bool IsZero(FixedPoint8 value)
     {
-        return (value._innerValue == 0);
+        return (value.InnerValue == 0);
     }
 
     public static FixedPoint8 MaxMagnitude(FixedPoint8 x, FixedPoint8 y)
     {
-        long absX = x._innerValue;
+        long absX = x.InnerValue;
 
         if (absX < 0)
         {
@@ -789,7 +788,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
             }
         }
 
-        long absY = y._innerValue;
+        long absY = y.InnerValue;
 
         if (absY < 0)
         {
@@ -821,7 +820,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
 
     public static FixedPoint8 MinMagnitude(FixedPoint8 x, FixedPoint8 y)
     {
-        long absX = x._innerValue;
+        long absX = x.InnerValue;
 
         if (absX < 0)
         {
@@ -833,7 +832,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
             }
         }
 
-        long absY = y._innerValue;
+        long absY = y.InnerValue;
 
         if (absY < 0)
         {
@@ -863,26 +862,51 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
         return MinMagnitude(x, y);
     }
 
+    // 速度最適化未実施
     public static FixedPoint8 Parse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider)
     {
-        throw new NotImplementedException();
+        decimal value = decimal.Parse(s, style, provider);
+        return (FixedPoint8)value;
     }
 
+    // 速度最適化未実施
     public static FixedPoint8 Parse(string s, NumberStyles style, IFormatProvider? provider)
     {
-        throw new NotImplementedException();
+        decimal value = decimal.Parse(s, style, provider);
+        return (FixedPoint8)value;
     }
 
+    // 速度最適化未実施
     public static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, [MaybeNullWhen(false)] out FixedPoint8 result)
     {
-        throw new NotImplementedException();
+        var success = decimal.TryParse(s, style, provider, out var decimalResult);
+        if (success)
+        {
+            result = (FixedPoint8)decimalResult;
+            return true;
+        }
+        else
+        {
+            result = FixedPoint8.Zero;
+            return false;
+        }
     }
 
+    // 速度最適化未実施
     public static bool TryParse([NotNullWhen(true)] string? s, NumberStyles style, IFormatProvider? provider, [MaybeNullWhen(false)] out FixedPoint8 result)
-    {       
-        throw new NotImplementedException();
+    {
+        var success = decimal.TryParse(s, style, provider, out var decimalResult);
+        if (success)
+        {
+            result = (FixedPoint8)decimalResult;
+            return true;
+        }
+        else
+        {
+            result = FixedPoint8.Zero;
+            return false;
+        }
     }
-
 
     public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
     {
@@ -1884,22 +1908,24 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
 
     public string ToString(string? format, IFormatProvider? formatProvider)　
     {
-        decimal dec = (decimal)this;
-        return dec.ToString(format, formatProvider);
+        decimal decimalValue = (decimal)this;
+        return decimalValue.ToString(format, formatProvider);
     }
 
+    // 速度最適化未実施
     public static FixedPoint8 Parse(ReadOnlySpan<char> s, IFormatProvider? provider)
     {
-        var dec = decimal.Parse(s, provider);
-        return (FixedPoint8)dec;
+        decimal decimalValue = decimal.Parse(s, provider);
+        return (FixedPoint8)decimalValue;
     }
 
+    // 速度最適化未実施
     public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider, [MaybeNullWhen(false)] out FixedPoint8 result)
     {
-        var success = decimal.TryParse(s, provider,out var decResult);
+        var success = decimal.TryParse(s, provider,out var decimalResult);
         if(success)
         {
-            result = (FixedPoint8)decResult;
+            result = (FixedPoint8)decimalResult;
             return true;
         }
         else
@@ -1909,18 +1935,20 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
         }
     }
 
+    // 速度最適化未実施
     public static FixedPoint8 Parse(string s, IFormatProvider? provider)
     {
-        var dec = decimal.Parse(s, provider);
-        return (FixedPoint8)dec;
+        var decimalValue = decimal.Parse(s, provider);
+        return (FixedPoint8)decimalValue;
     }
 
+    // 速度最適化未実施
     public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out FixedPoint8 result)
     {
-        var success = decimal.TryParse(s, provider, out var decResult);
+        var success = decimal.TryParse(s, provider, out var decimalResult);
         if (success)
         {
-            result = (FixedPoint8)decResult;
+            result = (FixedPoint8)decimalResult;
             return true;
         }
         else
@@ -1965,14 +1993,20 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
         long absValue;
         int sign; // 1 = + ,-1 = -
 
-        if (_innerValue < 0)
+        if (InnerValue < 0)
         {
-            absValue = -_innerValue;
+            if (InnerValue == long.MinValue)
+            {
+                // ((FixedPoint8)(-92233720368.1)).Round() と同じ値を返す
+                return ((FixedPoint8)(-92233720368.54775807m)).Round();
+            }
+
+            absValue = -InnerValue;
             sign = -1;
         }
         else
         {
-            absValue = _innerValue;
+            absValue = InnerValue;
             sign = 1;
         }
 
@@ -2017,46 +2051,57 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
             throw new ArgumentOutOfRangeException(_decimalsOutOfRange);
         }
 
-        long absValue;
+        ulong absValue;
         int sign; // 1 = + ,-1 = -
 
-        if (_innerValue < 0)
+        if (InnerValue < 0)
         {
-            absValue = -_innerValue;
+            if (InnerValue == long.MinValue)
+            {
+                return ((FixedPoint8)(-92233720368.54775807m)).Round(decimals);
+            }
+
+            absValue = (ulong)(-InnerValue);
             sign = -1;
         }
         else
         {
-            absValue = _innerValue;
+            absValue = (ulong)InnerValue;
             sign = 1;
         }
 
         var overDiv = powerArray[-decimals + 8];
-        var absOverRound = absValue / (long)overDiv;
+        var absOverRound = absValue / overDiv;
 
         var underPower = powerArray[10 + decimals];
-        var absUnderRound = (absValue - absOverRound * (long)overDiv) * (long)underPower;
+        var absUnderRound = (absValue - absOverRound * overDiv) * underPower;
 
         if (absUnderRound == 500000000000000000)
         {
             if ((absOverRound & 1) == 0)
             {
-                return new FixedPoint8(absOverRound * (long)overDiv * sign) ;
+                return new FixedPoint8((long)(absOverRound * overDiv) * sign) ;
             }
-            return new FixedPoint8((absOverRound + 1) * (long)overDiv * sign);
+            return new FixedPoint8((long)((absOverRound + 1) * overDiv) * sign);
         }
 
-        var mRoundOff = 5 * (long)overDiv / 10;
-        return new FixedPoint8(((absValue + mRoundOff) / (long)overDiv) * (long)overDiv * sign);
+        var mRoundOff = 5 * overDiv / 10;
+        return new FixedPoint8((long)((absValue + mRoundOff) / overDiv * overDiv) * sign);
     }
 
     public FixedPoint8 Floor()
     {
         long absValue;
 
-        if (_innerValue < 0)
+        if (InnerValue < 0)
         {
-            absValue = -_innerValue;
+            if (InnerValue == long.MinValue)
+            {
+                // ((FixedPoint8)(-92233720368.1)).Floor() と同じ値を返す
+                return ((FixedPoint8)(-92233720368.54775807m)).Floor();
+            }
+
+            absValue = -InnerValue;
 
             var overPoint = absValue / InnerPower;
             var underPoint = absValue - overPoint * InnerPower;
@@ -2069,7 +2114,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
         }
         else
         {
-            absValue = _innerValue;
+            absValue = InnerValue;
 
             var overPoint = absValue / InnerPower;
 
@@ -2084,56 +2129,64 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
             throw new ArgumentOutOfRangeException(_decimalsOutOfRange);
         }
 
-        long absValue;
+        ulong absValue;
 
-        if (_innerValue < 0)
+        if (InnerValue < 0)
         {
-            absValue = -_innerValue;
+            if (InnerValue == long.MinValue)
+            {
+                return ((FixedPoint8)(-92233720368.54775807m)).Floor(decimals);
+            }
+
+            absValue = (ulong)(-InnerValue);
 
             var overDiv = powerArray[-decimals + 8];
-            var absOverRound = absValue / (long)overDiv;
+            var absOverRound = absValue / overDiv;
 
             var underPower = powerArray[10 + decimals];
-            var absUnderRound = (absValue - absOverRound * (long)overDiv) * (long)underPower;
+            var absUnderRound = (absValue - absOverRound * overDiv) * underPower;
 
             if (absUnderRound == 0)
             {
-                return new FixedPoint8(-absOverRound * (long)overDiv);
+                return new FixedPoint8(((long)(absOverRound * overDiv)) * -1);
             }
-            return new FixedPoint8(-(absOverRound + 1) * (long)overDiv);
+            return new FixedPoint8(((long)((absOverRound + 1) * overDiv)) * -1);
 
         }
         else
         {
-            absValue = _innerValue;
+            absValue = (ulong)InnerValue;
 
             var overDiv = powerArray[-decimals + 8];
-            var absOverRound = absValue / (long)overDiv;
+            var absOverRound = absValue / overDiv;
 
-            return new FixedPoint8(absOverRound * (long)overDiv);
+            return new FixedPoint8((long)(absOverRound * overDiv));
         }
     }
-
 
     public FixedPoint8 Truncate()
     {
         long absValue;
-        int sign; // 1 = + ,-1 = -
 
-        if (_innerValue < 0)
+        if (InnerValue < 0)
         {
-            absValue = -_innerValue;
-            sign = -1;
+            if (InnerValue == long.MinValue)
+            {
+                return new FixedPoint8(-92233720368__0000_0000);
+            }
+
+            absValue = -InnerValue;
+
+            var overPoint = absValue / InnerPower;
+            return new FixedPoint8(overPoint * InnerPower * -1);
         }
         else
         {
-            absValue = _innerValue;
-            sign = 1;
+            absValue = InnerValue;
+
+            var overPoint = absValue / InnerPower;
+            return new FixedPoint8(overPoint * InnerPower);
         }
-
-        var overPoint = absValue / InnerPower;
-
-        return new FixedPoint8(overPoint * InnerPower * sign);
     }
 
     public FixedPoint8 Truncate(int decimals)
@@ -2143,34 +2196,45 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
             throw new ArgumentOutOfRangeException(_decimalsOutOfRange);
         }
 
-        long absValue;
-        int sign; // 1 = + ,-1 = -
+        ulong absValue;
 
-        if (_innerValue < 0)
+        if (InnerValue < 0)
         {
-            absValue = -_innerValue;
-            sign = -1;
+            if (InnerValue == long.MinValue)
+            {
+                return ((FixedPoint8)(-92233720368.54775807m)).Truncate(decimals);
+            }
+
+            absValue = (ulong)(-InnerValue);
+
+            var overDiv = powerArray[-decimals + 8];
+            var absOverRound = absValue / overDiv;
+
+            return new FixedPoint8(((long)(absOverRound * overDiv)) * -1);
         }
         else
         {
-            absValue = _innerValue;
-            sign = 1;
+            absValue = (ulong)InnerValue;
+
+            var overDiv = powerArray[-decimals + 8];
+            var absOverRound = absValue / overDiv;
+
+            return new FixedPoint8((long)(absOverRound * overDiv));
         }
-
-        var overDiv = powerArray[-decimals + 8];
-        var absOverRound = absValue / (long)overDiv;
-
-        return new FixedPoint8(absOverRound * (long)overDiv * sign);
     }
-
 
     public FixedPoint8 Ceiling()
     {
         long absValue;
 
-        if (_innerValue < 0)
+        if (InnerValue < 0)
         {
-            absValue = -_innerValue;
+            if (InnerValue == long.MinValue)
+            {
+                return new FixedPoint8(-92233720368__0000_0000);
+            }
+
+            absValue = -InnerValue;
 
             var overPoint = absValue / InnerPower;
 
@@ -2178,7 +2242,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
         }
         else
         {
-            absValue = _innerValue;
+            absValue = InnerValue;
 
             var overPoint = absValue / InnerPower;
             var underPoint = absValue - overPoint * InnerPower;
@@ -2194,32 +2258,37 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
 
     public FixedPoint8 Ceiling(int decimals)
     {
-        long absValue;
+        ulong absValue;
 
-        if (_innerValue < 0)
+        if (InnerValue < 0)
         {
-            absValue = -_innerValue;
+            if (InnerValue == long.MinValue)
+            {
+                return ((FixedPoint8)(-92233720368.54775807m)).Ceiling(decimals);
+            }
+
+            absValue = (ulong)(-InnerValue);
 
             var overDiv = powerArray[-decimals + 8];
-            var absOverRound = absValue / (long)overDiv;
+            var absOverRound = absValue / overDiv;
 
-            return new FixedPoint8(-absOverRound * (long)overDiv);
+            return new FixedPoint8(((long)(absOverRound * overDiv)) * -1);
         }
         else
         {
-            absValue = _innerValue;
+            absValue = (ulong)InnerValue;
 
             var overDiv = powerArray[-decimals + 8];
-            var absOverRound = absValue / (long)overDiv;
+            var absOverRound = absValue / overDiv;
 
             var underPower = powerArray[10 + decimals];
-            var absUnderRound = (absValue - absOverRound * (long)overDiv) * (long)underPower;
+            var absUnderRound = (absValue - absOverRound * overDiv) * underPower;
 
             if (absUnderRound == 0)
             {
-                return new FixedPoint8(absOverRound * (long)overDiv);
+                return new FixedPoint8((long)(absOverRound * overDiv));
             }
-            return new FixedPoint8((absOverRound + 1) * (long)overDiv);
+            return new FixedPoint8((long)((absOverRound + 1) * overDiv));
         }
     }
 

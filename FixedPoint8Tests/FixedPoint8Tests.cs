@@ -81,10 +81,10 @@ namespace Gitan.FixedPoint8.Tests
         public void ToUtf8Test()
         {
             var list = GetDecimals();
-
+            
             foreach (var decimal_a in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                var fp8 = (FixedPoint8)decimal_a;
                 var fp8Utf8 = fp8.ToUtf8();
                 var fp8String = Encoding.UTF8.GetString(fp8Utf8);
 
@@ -113,32 +113,32 @@ namespace Gitan.FixedPoint8.Tests
             var list = GetDecimals();
             foreach (var decimal_a in list)
             {
-                var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                var fp8_a = (FixedPoint8)decimal_a;
 
                 foreach (var decimal_b in list)
                 {
-                    var fp8_b = FixedPoint8.FromDecimal(decimal_b);
+                    var fp8_b = (FixedPoint8)decimal_b;
 
                     if (-46116860184.27387903m < decimal_a && decimal_a < 46116860184.27387903m
                         && -46116860184.27387903m < decimal_b && decimal_b < 46116860184.27387903m)
                     {
                         var fp8ResultAdd = fp8_a + fp8_b;
-                        Assert.IsTrue(fp8ResultAdd == FixedPoint8.FromDecimal(decimal_a + decimal_b));
+                        Assert.IsTrue(fp8ResultAdd == (FixedPoint8)(decimal_a + decimal_b));
 
                         var fp8ResultSub = fp8_a - fp8_b;
-                        Assert.IsTrue(fp8ResultSub == FixedPoint8.FromDecimal(decimal_a - decimal_b));
+                        Assert.IsTrue(fp8ResultSub == (FixedPoint8)(decimal_a - decimal_b));
                     }
 
                     if ((Math.Abs(decimal_a) < 303700) && (Math.Abs(decimal_b) < 303700))
                     {
                         var fp8ResultMul = fp8_a * fp8_b;
-                        Assert.IsTrue(fp8ResultMul == FixedPoint8.FromDecimal(decimal_a * decimal_b));
+                        Assert.IsTrue(fp8ResultMul == (FixedPoint8)(decimal_a * decimal_b));
                     }
 
                     if ((Math.Abs(decimal_a) < 303700) && (Math.Abs(decimal_b) > 1.0m / 303700))
                     {
                         var fp8ResultDiv = fp8_a / fp8_b;
-                        Assert.IsTrue(fp8ResultDiv == FixedPoint8.FromDecimal(decimal_a / decimal_b));
+                        Assert.IsTrue(fp8ResultDiv == (FixedPoint8)(decimal_a / decimal_b));
                     }
                 }
             }
@@ -150,11 +150,11 @@ namespace Gitan.FixedPoint8.Tests
             var list = GetDecimals();
             foreach (var decimal_a in list)
             {
-                var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                var fp8_a = (FixedPoint8)decimal_a;
 
                 foreach (var decimal_b in list)
                 {
-                    var fp8_b = FixedPoint8.FromDecimal(decimal_b);
+                    var fp8_b = (FixedPoint8)decimal_b;
 
                     decimal decimalResult = 0m;
                     bool decimalException = false;
@@ -182,7 +182,7 @@ namespace Gitan.FixedPoint8.Tests
 
                     if (decimalException == false)
                     {
-                        Assert.IsTrue(FixedPoint8.FromDecimal(decimalResult) == fp8Result);
+                        Assert.IsTrue((FixedPoint8)decimalResult == fp8Result);
                     }
                 }
             }
@@ -197,11 +197,11 @@ namespace Gitan.FixedPoint8.Tests
             // ==
             foreach (var decimal_a in list)
             {
-                var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                var fp8_a = (FixedPoint8)decimal_a;
 
                 foreach (var decimal_b in list)
                 {
-                    var fp8_b = FixedPoint8.FromDecimal(decimal_b);
+                    var fp8_b = (FixedPoint8)decimal_b;
 
                     bool decimalResult = decimal_a == decimal_b;
                     bool fp8Result = fp8_a == fp8_b;
@@ -212,11 +212,11 @@ namespace Gitan.FixedPoint8.Tests
             // !=
             foreach (var decimal_a in list)
             {
-                var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                var fp8_a = (FixedPoint8)decimal_a;
 
                 foreach (var decimal_b in list)
                 {
-                    var fp8_b = FixedPoint8.FromDecimal(decimal_b);
+                    var fp8_b = (FixedPoint8)decimal_b;
 
                     bool decimalResult = decimal_a != decimal_b;
                     bool fp8Result = fp8_a != fp8_b;
@@ -227,11 +227,11 @@ namespace Gitan.FixedPoint8.Tests
             // <
             foreach (var decimal_a in list)
             {
-                var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                var fp8_a = (FixedPoint8)decimal_a;
 
                 foreach (var decimal_b in list)
                 {
-                    var fp8_b = FixedPoint8.FromDecimal(decimal_b);
+                    var fp8_b = (FixedPoint8)decimal_b;
 
                     bool decimalResult = decimal_a < decimal_b;
                     bool fp8Result = fp8_a < fp8_b;
@@ -242,11 +242,11 @@ namespace Gitan.FixedPoint8.Tests
             // <=
             foreach (var decimal_a in list)
             {
-                var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                var fp8_a = (FixedPoint8)decimal_a;
 
                 foreach (var decimal_b in list)
                 {
-                    var fp8_b = FixedPoint8.FromDecimal(decimal_b);
+                    var fp8_b = (FixedPoint8)decimal_b;
 
                     bool decimalResult = decimal_a <= decimal_b;
                     bool fp8Result = fp8_a <= fp8_b;
@@ -257,11 +257,11 @@ namespace Gitan.FixedPoint8.Tests
             // >
             foreach (var decimal_a in list)
             {
-                var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                var fp8_a = (FixedPoint8)decimal_a;
 
                 foreach (var decimal_b in list)
                 {
-                    var fp8_b = FixedPoint8.FromDecimal(decimal_b);
+                    var fp8_b = (FixedPoint8)decimal_b;
 
                     bool decimalResult = decimal_a > decimal_b;
                     bool fp8Result = fp8_a > fp8_b;
@@ -272,11 +272,11 @@ namespace Gitan.FixedPoint8.Tests
             // >=
             foreach (var decimal_a in list)
             {
-                var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                var fp8_a = (FixedPoint8)decimal_a;
 
                 foreach (var decimal_b in list)
                 {
-                    var fp8_b = FixedPoint8.FromDecimal(decimal_b);
+                    var fp8_b = (FixedPoint8)decimal_b;
 
                     bool decimalResult = decimal_a >= decimal_b;
                     bool fp8Result = fp8_a >= fp8_b;
@@ -287,11 +287,11 @@ namespace Gitan.FixedPoint8.Tests
             // Equals
             foreach (var decimal_a in list)
             {
-                var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                var fp8_a = (FixedPoint8)decimal_a;
 
                 foreach (var decimal_b in list)
                 {
-                    var fp8_b = FixedPoint8.FromDecimal(decimal_b);
+                    var fp8_b = (FixedPoint8)decimal_b;
 
                     bool decimalResult = decimal_a.Equals(decimal_b);
                     bool fp8Result = fp8_a.Equals(fp8_b);
@@ -310,11 +310,11 @@ namespace Gitan.FixedPoint8.Tests
             {
                 if (decimal_a < 92233720367m)
                 {
-                    var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                    var fp8 = (FixedPoint8)decimal_a;
                     var decimalResult = decimal_a + 1;
                     fp8++;
 
-                    Assert.IsTrue(FixedPoint8.FromDecimal(decimalResult) == fp8);
+                    Assert.IsTrue((FixedPoint8)decimalResult == fp8);
                 }
             }
 
@@ -322,11 +322,11 @@ namespace Gitan.FixedPoint8.Tests
             {
                 if (-92233720367m < decimal_a)
                 {
-                    var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                    var fp8 = (FixedPoint8)decimal_a;
                     var decimalResult = decimal_a - 1;
                     fp8--;
 
-                    Assert.IsTrue(FixedPoint8.FromDecimal(decimalResult) == fp8);
+                    Assert.IsTrue((FixedPoint8)decimalResult == fp8);
                 }
             }
         }
@@ -340,18 +340,18 @@ namespace Gitan.FixedPoint8.Tests
             {
                 if (-92233720367m < decimal_a && decimal_a < 92233720367m)
                 {
-                    var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                    var fp8 = (FixedPoint8)decimal_a;
                     {
                         var fp8Result = -fp8;
                         var decimalResult = -decimal_a;
 
-                        Assert.IsTrue(fp8Result == FixedPoint8.FromDecimal(decimalResult));
+                        Assert.IsTrue(fp8Result == (FixedPoint8)decimalResult);
                     }
                     {
                         var fp8Result = +fp8;
                         var decimalResult = +decimal_a;
 
-                        Assert.IsTrue(fp8Result == FixedPoint8.FromDecimal(decimalResult));
+                        Assert.IsTrue(fp8Result == (FixedPoint8)decimalResult);
                     }
                 }
             }
@@ -366,7 +366,7 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                var fp8 = (FixedPoint8)decimal_a;
                 var hash =fp8.GetHashCode();
             }
         }
@@ -379,11 +379,11 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                var fp8_a = (FixedPoint8)decimal_a;
 
                 foreach (var decimal_b in list)
                 {
-                    var fp8_b = FixedPoint8.FromDecimal(decimal_b);
+                    var fp8_b = (FixedPoint8)decimal_b;
 
                     var fp8Result = fp8_a.CompareTo(fp8_b);
                     var decimalResult = decimal_a.CompareTo(decimal_b);
@@ -402,11 +402,11 @@ namespace Gitan.FixedPoint8.Tests
             {
                 if (-46116860184.27387903m < decimal_a && decimal_a < 46116860184.27387903m)
                 {
-                    var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                    var fp8 = (FixedPoint8)decimal_a;
                     var fp8Result = FixedPoint8.Abs(fp8);
                     var decimalResult = decimal.Abs(decimal_a);
 
-                    Assert.IsTrue(fp8Result == FixedPoint8.FromDecimal(decimalResult));
+                    Assert.IsTrue(fp8Result == (FixedPoint8)decimalResult);
                 }
             }
         }
@@ -418,7 +418,7 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                var fp8 = (FixedPoint8)decimal_a;
                 bool fp8Result = FixedPoint8.IsCanonical(fp8);
 
                 Assert.IsTrue(fp8Result);
@@ -432,7 +432,7 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                var fp8 = (FixedPoint8)decimal_a;
                 bool fp8Result = FixedPoint8.IsComplexNumber(fp8);
 
                 Assert.IsFalse(fp8Result);
@@ -446,7 +446,7 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                var fp8 = (FixedPoint8)decimal_a;
                 bool fp8Result = FixedPoint8.IsEvenInteger(fp8);
                 bool decimalResult = decimal.IsEvenInteger(decimal_a);
 
@@ -461,7 +461,7 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                var fp8 = (FixedPoint8)decimal_a;
                 bool fp8Result = FixedPoint8.IsFinite(fp8);
                 bool doubleResult = double.IsFinite((double)decimal_a);
 
@@ -476,7 +476,7 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                var fp8 = (FixedPoint8)decimal_a;
                 bool fp8Result = FixedPoint8.IsImaginaryNumber(fp8);
 
                 Assert.IsFalse(fp8Result);
@@ -490,7 +490,7 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                var fp8 = (FixedPoint8)decimal_a;
                 bool fp8Result = FixedPoint8.IsInfinity(fp8);
                 bool doubleResult = double.IsInfinity((double)decimal_a);
 
@@ -505,7 +505,7 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                var fp8 = (FixedPoint8)decimal_a;
                 bool fp8Result = FixedPoint8.IsInteger(fp8);
                 bool decimalResult = decimal.IsInteger(decimal_a);
 
@@ -520,7 +520,7 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                var fp8 = (FixedPoint8)decimal_a;
                 bool fp8Result = FixedPoint8.IsNaN(fp8);
                 bool doubleResult = double.IsNaN((double)decimal_a);
 
@@ -535,7 +535,7 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                var fp8 = (FixedPoint8)decimal_a;
                 bool fp8Result = FixedPoint8.IsNegative(fp8);
                 bool decimalResult = decimal.IsNegative(decimal_a);
 
@@ -550,7 +550,7 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                var fp8 = (FixedPoint8)decimal_a;
                 bool fp8Result = FixedPoint8.IsNegativeInfinity(fp8);
                 bool doubleResult = double.IsNegativeInfinity((double)decimal_a);
 
@@ -565,7 +565,7 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                var fp8 = (FixedPoint8)decimal_a;
                 bool fp8Result = FixedPoint8.IsNormal(fp8);
                 bool doubleResult = double.IsNormal((double)decimal_a);
 
@@ -581,7 +581,7 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                var fp8 = (FixedPoint8)decimal_a;
                 bool fp8Result = FixedPoint8.IsOddInteger(fp8);
                 bool decimalResult = decimal.IsOddInteger(decimal_a);
 
@@ -596,7 +596,7 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                var fp8 = (FixedPoint8)decimal_a;
                 bool fp8Result = FixedPoint8.IsPositive(fp8);
                 bool decimalResult = decimal.IsPositive(decimal_a);
 
@@ -611,7 +611,7 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                var fp8 = (FixedPoint8)decimal_a;
                 bool fp8Result = FixedPoint8.IsPositiveInfinity(fp8);
                 bool doubleResult = double.IsPositiveInfinity((double)decimal_a);
 
@@ -626,7 +626,7 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                var fp8 = (FixedPoint8)decimal_a;
                 bool fp8Result = FixedPoint8.IsRealNumber(fp8);
                 bool doubleResult = double.IsRealNumber((double)decimal_a);
 
@@ -641,7 +641,7 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                var fp8 = (FixedPoint8)decimal_a;
                 bool fp8Result = FixedPoint8.IsSubnormal(fp8);
                 bool doubleResult = double.IsSubnormal((double)decimal_a);
 
@@ -656,7 +656,7 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                var fp8 = (FixedPoint8)decimal_a;
                 bool fp8Result = FixedPoint8.IsZero(fp8);
 
                 if (fp8 == FixedPoint8.Zero)
@@ -678,16 +678,16 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                var fp8_a = (FixedPoint8)decimal_a;
 
                 foreach (var decimal_b in list)
                 {
-                    var fp8_b = FixedPoint8.FromDecimal(decimal_b);
+                    var fp8_b = (FixedPoint8)decimal_b;
 
                     var fp8Result = FixedPoint8.MaxMagnitude(fp8_a, fp8_b);
                     var decimalResult = decimal.MaxMagnitude(decimal_a, decimal_b);
 
-                    Assert.IsTrue(fp8Result == FixedPoint8.FromDecimal(decimalResult));
+                    Assert.IsTrue(fp8Result == (FixedPoint8)decimalResult);
                 }
             }
         }
@@ -699,16 +699,16 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                var fp8_a = (FixedPoint8)decimal_a;
 
                 foreach (var decimal_b in list)
                 {
-                    var fp8_b = FixedPoint8.FromDecimal(decimal_b);
+                    var fp8_b = (FixedPoint8)decimal_b;
 
                     var fp8Result = FixedPoint8.MaxMagnitudeNumber(fp8_a, fp8_b);
                     var decimalResult = decimal.MaxMagnitude(decimal_a, decimal_b);
 
-                    Assert.IsTrue(fp8Result == FixedPoint8.FromDecimal(decimalResult));
+                    Assert.IsTrue(fp8Result == (FixedPoint8)decimalResult);
                 }
             }
         }
@@ -720,16 +720,16 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                var fp8_a = (FixedPoint8)decimal_a;
 
                 foreach (var decimal_b in list)
                 {
-                    var fp8_b = FixedPoint8.FromDecimal(decimal_b);
+                    var fp8_b = (FixedPoint8)decimal_b;
 
                     var fp8Result = FixedPoint8.MinMagnitude(fp8_a, fp8_b);
                     var decimalResult = decimal.MinMagnitude(decimal_a, decimal_b);
 
-                    Assert.IsTrue(fp8Result == FixedPoint8.FromDecimal(decimalResult));
+                    Assert.IsTrue(fp8Result == (FixedPoint8)decimalResult);
                 }
             }
         }
@@ -741,16 +741,16 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                var fp8_a = (FixedPoint8)decimal_a;
 
                 foreach (var decimal_b in list)
                 {
-                    var fp8_b = FixedPoint8.FromDecimal(decimal_b);
+                    var fp8_b = (FixedPoint8)decimal_b;
 
                     var fp8Result = FixedPoint8.MinMagnitudeNumber(fp8_a, fp8_b);
                     var decimalResult = decimal.MinMagnitude(decimal_a, decimal_b);
 
-                    Assert.IsTrue(fp8Result == FixedPoint8.FromDecimal(decimalResult));
+                    Assert.IsTrue(fp8Result == (FixedPoint8)decimalResult);
                 }
             }
         }
@@ -833,18 +833,18 @@ namespace Gitan.FixedPoint8.Tests
                     // String
                     result = FixedPoint8.TryParse(fromString, out value);
                     Assert.IsTrue(result);
-                    Assert.IsTrue(value == FixedPoint8.FromDecimal(resultNum));
+                    Assert.IsTrue(value == (FixedPoint8)resultNum);
 
                     value = FixedPoint8.Parse(fromString);
-                    Assert.IsTrue(value == FixedPoint8.FromDecimal(resultNum));
+                    Assert.IsTrue(value == (FixedPoint8)resultNum);
 
                     // CharArray
                     result = FixedPoint8.TryParse(fromString.ToCharArray(), out value);
                     Assert.IsTrue(result);
-                    Assert.IsTrue(value == FixedPoint8.FromDecimal(resultNum));
+                    Assert.IsTrue(value == (FixedPoint8)resultNum);
 
                     value = FixedPoint8.Parse(fromString.ToCharArray());
-                    Assert.IsTrue(value == FixedPoint8.FromDecimal(resultNum));
+                    Assert.IsTrue(value == (FixedPoint8)resultNum);
                 }
 
                 // Utf8
@@ -852,10 +852,10 @@ namespace Gitan.FixedPoint8.Tests
 
                 result = FixedPoint8.TryParse(fromUtf8, out value);
                 Assert.IsTrue(result);
-                Assert.IsTrue(value == FixedPoint8.FromDecimal(resultNum));
+                Assert.IsTrue(value == (FixedPoint8)resultNum);
 
                 value = FixedPoint8.Parse(fromUtf8);
-                Assert.IsTrue(value == FixedPoint8.FromDecimal(resultNum));
+                Assert.IsTrue(value == (FixedPoint8)resultNum);
             }
             else
             {
@@ -917,115 +917,115 @@ namespace Gitan.FixedPoint8.Tests
             {
                 if (sbyte.MinValue <= decimal_a && decimal_a <= sbyte.MaxValue)
                 {
-                    var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                    var fp8_a = (FixedPoint8)decimal_a;
                     var decimalTo = (sbyte)decimal_a;
                     var fp8To = (sbyte)fp8_a;
                     Assert.IsTrue(decimalTo == fp8To);
 
                     var toFp8 = (FixedPoint8)decimalTo;
                     var toDecimal = (decimal)decimalTo;
-                    Assert.IsTrue(toFp8 == FixedPoint8.FromDecimal(toDecimal));
+                    Assert.IsTrue(toFp8 == (FixedPoint8)toDecimal);
                 }
 
                 if (byte.MinValue <= decimal_a && decimal_a <= byte.MaxValue)
                 {
-                    var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                    var fp8_a = (FixedPoint8)decimal_a;
                     var decimalTo = (byte)decimal_a;
                     var fp8To = (byte)fp8_a;
                     Assert.IsTrue(decimalTo == fp8To);
 
                     var toFp8 = (FixedPoint8)decimalTo;
                     var toDecimal = (decimal)decimalTo;
-                    Assert.IsTrue(toFp8 == FixedPoint8.FromDecimal(toDecimal));
+                    Assert.IsTrue(toFp8 == (FixedPoint8)toDecimal);
                 }
 
                 if (short.MinValue <= decimal_a && decimal_a <= short.MaxValue)
                 {
-                    var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                    var fp8_a = (FixedPoint8)decimal_a;
                     var decimalTo = (short)decimal_a;
                     var fp8To = (short)fp8_a;
                     Assert.IsTrue(decimalTo == fp8To);
 
                     var toFp8 = (FixedPoint8)decimalTo;
                     var toDecimal = (decimal)decimalTo;
-                    Assert.IsTrue(toFp8 == FixedPoint8.FromDecimal(toDecimal));
+                    Assert.IsTrue(toFp8 == (FixedPoint8)toDecimal);
                 }
 
                 if (ushort.MinValue <= decimal_a && decimal_a <= ushort.MaxValue)
                 {
-                    var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                    var fp8_a = (FixedPoint8)decimal_a;
                     var decimalTo = (ushort)decimal_a;
                     var fp8To = (ushort)fp8_a;
                     Assert.IsTrue(decimalTo == fp8To);
 
                     var toFp8 = (FixedPoint8)decimalTo;
                     var toDecimal = (decimal)decimalTo;
-                    Assert.IsTrue(toFp8 == FixedPoint8.FromDecimal(toDecimal));
+                    Assert.IsTrue(toFp8 == (FixedPoint8)toDecimal);
                 }
 
                 if (int.MinValue <= decimal_a && decimal_a <= int.MaxValue)
                 {
-                    var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                    var fp8_a = (FixedPoint8)decimal_a;
                     var decimalTo = (int)decimal_a;
                     var fp8To = (int)fp8_a;
                     Assert.IsTrue(decimalTo == fp8To);
 
                     var toFp8 = (FixedPoint8)decimalTo;
                     var toDecimal = (decimal)decimalTo;
-                    Assert.IsTrue(toFp8 == FixedPoint8.FromDecimal(toDecimal));
+                    Assert.IsTrue(toFp8 == (FixedPoint8)toDecimal);
                 }
 
                 if (uint.MinValue <= decimal_a && decimal_a <= uint.MaxValue)
                 {
-                    var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                    var fp8_a = (FixedPoint8)decimal_a;
                     var decimalTo = (uint)decimal_a;
                     var fp8To = (uint)fp8_a;
                     Assert.IsTrue(decimalTo == fp8To);
 
                     var toFp8 = (FixedPoint8)decimalTo;
                     var toDecimal = (decimal)decimalTo;
-                    Assert.IsTrue(toFp8 == FixedPoint8.FromDecimal(toDecimal));
+                    Assert.IsTrue(toFp8 == (FixedPoint8)toDecimal);
                 }
 
                 {
-                    var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                    var fp8_a = (FixedPoint8)decimal_a;
                     var decimalTo = (long)decimal_a;
                     var fp8To = (long)fp8_a;
                     Assert.IsTrue(decimalTo == fp8To);
 
                     var toFp8 = (FixedPoint8)decimalTo;
                     var toDecimal = (decimal)decimalTo;
-                    Assert.IsTrue(toFp8 == FixedPoint8.FromDecimal(toDecimal));
+                    Assert.IsTrue(toFp8 == (FixedPoint8)toDecimal);
                 }
 
                 if (0 < decimal_a)
                 {
-                    var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                    var fp8_a = (FixedPoint8)decimal_a;
                     var decimalTo = (ulong)decimal_a;
                     var fp8To = (ulong)fp8_a;
                     Assert.IsTrue(decimalTo == fp8To);
 
                     var toFp8 = (FixedPoint8)decimalTo;
                     var toDecimal = (decimal)decimalTo;
-                    Assert.IsTrue(toFp8 == FixedPoint8.FromDecimal(toDecimal));
+                    Assert.IsTrue(toFp8 == (FixedPoint8)toDecimal);
                 }
 
                 if (decimal_a == 0)
                 {
-                    var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                    var fp8_a = (FixedPoint8)decimal_a;
                     var decimalTo = (float)decimal_a;
                     var fp8To = (float)fp8_a;
                     Assert.IsTrue(decimalTo == fp8To);
 
                     var toFp8 = (FixedPoint8)decimalTo;
                     var toDecimal = (decimal)decimalTo;
-                    Assert.IsTrue(toFp8 == FixedPoint8.FromDecimal(toDecimal));
+                    Assert.IsTrue(toFp8 == (FixedPoint8)toDecimal);
                 }
                 else
                 {
                     if (-92233720367m < decimal_a && decimal_a < 92233720367m)
                     {
-                        var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                        var fp8_a = (FixedPoint8)decimal_a;
                         var decimalTo = (float)decimal_a;
                         var fp8To = (float)fp8_a;
 
@@ -1042,20 +1042,20 @@ namespace Gitan.FixedPoint8.Tests
 
                 if (decimal_a == 0)
                 {
-                    var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                    var fp8_a = (FixedPoint8)decimal_a;
                     var decimalTo = (double)decimal_a;
                     var fp8To = (double)fp8_a;
                     Assert.IsTrue(decimalTo == fp8To);
 
                     var toFp8 = (FixedPoint8)decimalTo;
                     var toDecimal = (decimal)decimalTo;
-                    Assert.IsTrue(toFp8 == FixedPoint8.FromDecimal(toDecimal));
+                    Assert.IsTrue(toFp8 == (FixedPoint8)toDecimal);
                 }
                 else
                 {
                     if (-92233720367m < decimal_a && decimal_a < 92233720367m)
                     {
-                        var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                        var fp8_a = (FixedPoint8)decimal_a;
                         var decimalTo = (double)decimal_a;
                         var fp8To = (double)fp8_a;
 
@@ -1070,14 +1070,14 @@ namespace Gitan.FixedPoint8.Tests
                 }
 
                 {
-                    var fp8_a = FixedPoint8.FromDecimal(decimal_a);
+                    var fp8_a = (FixedPoint8)decimal_a;
                     var decimalTo = (decimal)decimal_a;
                     var fp8To = (decimal)fp8_a;
                     Assert.IsTrue(decimalTo == fp8To);
 
                     var toFp8 = (FixedPoint8)decimalTo;
                     var toDecimal = (decimal)decimalTo;
-                    Assert.IsTrue(toFp8 == FixedPoint8.FromDecimal(toDecimal));
+                    Assert.IsTrue(toFp8 == (FixedPoint8)toDecimal);
                 }
             }
         }
@@ -1090,11 +1090,11 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var decimal_a in list)
             {
-                if (-92233720367m < decimal_a && decimal_a < 92233720367m)
-                {
-                    var fp8 = FixedPoint8.FromDecimal(decimal_a);
+                var fp8 = (FixedPoint8)decimal_a;
 
-                    // Round
+                if (-92233720368m <= decimal_a && decimal_a < 92233720368m)
+                {
+                    //Round
                     var mathRound = Math.Round(decimal_a);
                     var fp8Round = fp8.Round();
                     Assert.IsTrue((decimal)fp8Round == mathRound);
@@ -1162,6 +1162,8 @@ namespace Gitan.FixedPoint8.Tests
                         var fp8Floor2 = fp8.Floor(decimals);
                         Assert.IsTrue((decimal)fp8Floor2 == mathFloor2);
                     }
+
+
 
 
                     // Truncate
@@ -1245,15 +1247,38 @@ namespace Gitan.FixedPoint8.Tests
             }
         }
 
-
         [TestMethod()]
+        public void MinValueMathTest()
+        {
+            decimal value = -92233720368.54775808m;
+
+            //var mRound = Math.Round(value);
+            //var mFloor = Math.Floor(-0.5);
+            var mTruncate = Math.Truncate(0.5);
+            var mCeiling = Math.Ceiling(0.5);
+            var mTruncate2 = Math.Truncate(-0.5);
+            var mCeiling2 = Math.Ceiling(-0.5);
+
+            //var fp8Round = ((FixedPoint8)value).Round();             
+            //var fp8Floor = ((FixedPoint8)value).Floor();             
+            //var fp8Truncate = ((FixedPoint8)value).Truncate();
+            //var fp8Ceiling = ((FixedPoint8)value).Ceiling();
+
+            Assert.IsTrue(((FixedPoint8)value).Round().ToString() == "92233720368");
+            Assert.IsTrue(((FixedPoint8)value).Floor().ToString() == "92233720368.09551616");
+            Assert.IsTrue(((FixedPoint8)value).Truncate().ToString() == "-92233720368");
+            Assert.IsTrue(((FixedPoint8)value).Ceiling().ToString() == "-92233720368");
+        }
+
+
+            [TestMethod()]
         public void WriteCharsTest()
         {
             var list = GetDecimals();
 
             foreach (var item in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(item);
+                var fp8 = (FixedPoint8)item;
 
                 var fp8St = $"{fp8}";
                 var decSt = $"{item}";
@@ -1285,7 +1310,7 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var item in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(item);
+                var fp8 = (FixedPoint8)item;
 
                 int offset = 0;
 
@@ -1324,7 +1349,7 @@ namespace Gitan.FixedPoint8.Tests
 
             foreach (var item in list)
             {
-                var fp8 = FixedPoint8.FromDecimal(item);
+                var fp8 = (FixedPoint8)item;
                 var result = fp8.ToString();
 
                 var decimalString = item.ToString();

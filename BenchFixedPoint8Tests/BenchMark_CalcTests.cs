@@ -180,7 +180,7 @@ namespace Gitan.FixedPoint8.Tests
             Assert.AreEqual((double)resultDecimal, resultDouble, 0.00000001);
 
             var resultFp8 = instance.FixedPoint8Floor();
-            Assert.IsTrue(resultFp8 == FixedPoint8.FromDecimal(-4m));
+            Assert.IsTrue(resultFp8 == (FixedPoint8)(-4m));
 
             Assert.IsTrue(resultDecimal == (decimal)resultFp8);
         }
@@ -196,7 +196,7 @@ namespace Gitan.FixedPoint8.Tests
             Assert.AreEqual((double)resultDecimal, resultDouble, 0.00000001);
 
             var resultFp8 = instance.FixedPoint8Floor2();
-            Assert.IsTrue(resultFp8 == FixedPoint8.FromDecimal(-0.02m));
+            Assert.IsTrue(resultFp8 == (FixedPoint8)(-0.02m));
 
             Assert.IsTrue(resultDecimal == (decimal)resultFp8);
         }
@@ -246,7 +246,7 @@ namespace Gitan.FixedPoint8.Tests
             Assert.AreEqual((double)resultDecimal, resultDouble, 0.00000001);
 
             var resultFp8 = instance.FixedPoint8Ceiling();
-            Assert.IsTrue(resultFp8 == FixedPoint8.FromDecimal(4m));
+            Assert.IsTrue(resultFp8 == (FixedPoint8)(4m));
 
             Assert.IsTrue(resultDecimal == (decimal)resultFp8);
         }
@@ -262,7 +262,7 @@ namespace Gitan.FixedPoint8.Tests
             Assert.AreEqual((double)resultDecimal, resultDouble, 0.00000001);
 
             var resultFp8 = instance.FixedPoint8Ceiling2();
-            Assert.IsTrue(resultFp8 == FixedPoint8.FromDecimal(0.02m));
+            Assert.IsTrue(resultFp8 == (FixedPoint8)(0.02m));
 
             Assert.IsTrue(resultDecimal == (decimal)resultFp8);
         }

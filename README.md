@@ -10,7 +10,7 @@ Gitan.FixedPoint8は、固定小数点で-92233720368.54775808～92233720368.547
 
 ・ Gitan.FixedPoint8はuncheckedで動きます、オーバーフローが発生する値でエラーは発生しませんのでご注意ください。
 
-・ FixedPoint8同士の乗算、除算（速度最適化未実施）
+・ 機能のいくつかはdecimalを使用した実装になっているため、十分な速度がでません。(速度最適化未実施と記載のある機能が該当します)
 
 
 ■ **使用方法**
@@ -763,91 +763,89 @@ byte[]でReader,Writer,Deserialize,Serializeの比較
 |decimal                     |
 
 
-|                    オペレーター| 
-| -------------------------- |
-|+(FixedPoint8,FixedPoint8)  |
-|-(FixedPoint8,FixedPoint8)  |
-|*(FixedPoint8,long)         |
-|*(FixedPoint8,ulong)        |
-|*(FixedPoint8,FixedPoint8)  |
-|/(FixedPoint8,long)         |
-|/(FixedPoint8,ulong)        |
-|/(FixedPoint8,FixedPoint8)  |
-|==(FixedPoint8,FixedPoint8) |
-|!=(FixedPoint8,FixedPoint8) |
-|<(FixedPoint8,FixedPoint8)  |
-|<=(FixedPoint8,FixedPoint8) |
-|>(FixedPoint8,FixedPoint8)  |
-|>=(FixedPoint8,FixedPoint8) |
-|%(FixedPoint8,FixedPoint8)  |
-|++(FixedPoint8)             |
-|--(FixedPoint8)             |
-|+(FixedPoint8)              |
-|-(FixedPoint8)              |
+|                    オペレーター| 説明|
+| -------------------------- | -------------------------- |
+|+(FixedPoint8,FixedPoint8)  | |
+|-(FixedPoint8,FixedPoint8)  | |
+|*(FixedPoint8,long)         | |
+|*(FixedPoint8,ulong)        | |
+|*(FixedPoint8,FixedPoint8)  |※速度最適化未実施|
+|/(FixedPoint8,long)         | |
+|/(FixedPoint8,ulong)        | |
+|/(FixedPoint8,FixedPoint8)  |※速度最適化未実施|
+|==(FixedPoint8,FixedPoint8) | |
+|!=(FixedPoint8,FixedPoint8) | |
+|<(FixedPoint8,FixedPoint8)  | |
+|<=(FixedPoint8,FixedPoint8) | |
+|>(FixedPoint8,FixedPoint8)  | |
+|>=(FixedPoint8,FixedPoint8) | |
+|%(FixedPoint8,FixedPoint8)  | |
+|++(FixedPoint8)             | |
+|--(FixedPoint8)             | |
+|+(FixedPoint8)              | |
+|-(FixedPoint8)              | |
 
 
 |メソッド|説明|
 | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-|FromInnerValue(long)|longをFixedPoint8の値で返します|
-|FromDouble(double)|doubleをFixedPoint8の値で返します|
-|FromDecimal(decimal)|decimalのFixedPoint8の値で返します|
-|Parse(string)|文字列をFixedPoint8に変換しようとします|
-|Parse(ReadOnlySpan<char>)|読み取り専用のcharを、FixedPoint8に変換しようとします|
-|Parse(ReadOnlySpan<byte>)|読み取り専用のbyteを、FixedPoint8に変換しようとします|
-|TryParse([NotNullWhen(true)] string?, out FixedPoint8)|文字列をFixedPoint8に変換しようとします。戻り値は、変換が成功したか失敗したかを示します|
-|TryParse(ReadOnlySpan<char>, out FixedPoint8)|読み取り専用のcharを、FixedPoint8に変換しようとします。戻り値は、変換が成功したか失敗したかを示します|
-|TryParse(ReadOnlySpan<byte>, out FixedPoint8)|読み取り専用のbyteを、FixedPoint8に変換しようとします。 戻り値は、変換が成功したか失敗したかを示します|
-|ToString()|このインスタンスの数値を同等の文字列表現に変換します|
-|ToUtf8()|このインスタンスの数値をUTF8に変換します|
-|Equals(object?)|このインスタンスが指定されたオブジェクトと等しいかどうかを示す値を返します|
-|Equals(FixedPoint8)|このインスタンスが指定されたFixedPoint8と等しいかどうかを示す値を返します|
-|GetHashCode()|このインスタンスのハッシュ コードを返します|
-|CompareTo(object?)|このインスタンスを指定されたオブジェクトと比較し、それらの相対値の指示を返します|
-|CompareTo(FixedPoint8)|このインスタンスを指定されたFixedPoint8と比較し、それらの相対値の指示を返します|
+|FromInnerValue(long)|引数で渡した内部の値(long)からFixedPoint8の値を作って返します|
+|Parse(string)|文字列をFixedPoint8に変換します|
+|Parse(ReadOnlySpan&lt;char&gt;)|ReadOnlySpan&lt;char&gt;からFixedPoint8に変換します|
+|Parse(ReadOnlySpan&lt;byte&gt;)|ReadOnlySpan&lt;byte&gt;からFixedPoint8に変換します|
+|TryParse([NotNullWhen(true)] string?, out FixedPoint8)|文字列をFixedPoint8に変換を試みます。変換失敗時はfalseを返します|
+|TryParse(ReadOnlySpan&lt;char&gt;, out FixedPoint8)|ReadOnlySpan&lt;char&gt;からFixedPoint8に変換を試みます。変換失敗時はfalseが返ります|
+|TryParse(ReadOnlySpan&lt;byte&gt;, out FixedPoint8)|ReadOnlySpan&lt;byte&gt;からFixedPoint8に変換を試みます。変換失敗時はfalseが返ります|
+|ToString()|FixedPoint8からstringに変換します|
+|ToUtf8()|FixedPoint8からUTF8(byte[])に変換します|
+|Equals(object?)|自分自身とobjectが等しいかどうかを返します|
+|Equals(FixedPoint8)|自分自身と引数の値が等しいかどうかを返します|
+|GetHashCode()|この値のハッシュコードを返します|
+|CompareTo(object?)|この値の指定されたobjectと比較し、objectより小さければ-1,同じなら0,大きければ1を返します|
+|CompareTo(FixedPoint8)|この値の指定されたFixedPoint8と比較し、小さければ-1,同じなら0,大きければ1を返します|
 |Abs(FixedPoint8)|FixedPoint8の絶対値を返します|
 |IsCanonical(FixedPoint8)|trueを返します|
 |IsComplexNumber(FixedPoint8)|falseを返します|
-|IsEvenInteger(FixedPoint8)|値が偶数の整数を表すかどうかを判断します|
+|IsEvenInteger(FixedPoint8)|値が偶数の整数かどうかを判断します。違う場合はfalseを返します|
 |IsFinite(FixedPoint8)|trueを返します|
 |IsImaginaryNumber(FixedPoint8)|falseを返します|
 |IsInfinity(FixedPoint8)|falseを返します|
-|IsInteger(FixedPoint8)|longの可能な最小値を返します|
+|IsInteger(FixedPoint8)|値が整数かどうかを判断します。違う場合はfalseを返します|
 |IsNaN(FixedPoint8)|falseを返します|
-|IsNegative(FixedPoint8)|値が負かどうかを判断します|
+|IsNegative(FixedPoint8)|値が負かどうかを返します|
 |IsNegativeInfinity(FixedPoint8)|falseを返します|
-|IsNormal(FixedPoint8)|trueを返します|
-|IsOddInteger(FixedPoint8)|値が奇数の整数を表すかどうかを判断します|
-|IsPositive(FixedPoint8)|値が正かどうかを判断します|
+|IsNormal(FixedPoint8)|値が0ならfalseを返します。違う場合はtrueを返します|
+|IsOddInteger(FixedPoint8)|値が奇数の整数かどうかを判断します。違う場合はfalseを返します|
+|IsPositive(FixedPoint8)|値が正かどうかを返します|
 |IsPositiveInfinity(FixedPoint8)|falseを返します|
 |IsRealNumber(FixedPoint8)|trueを返します|
 |IsSubnormal(FixedPoint8)|falseを返します|
-|IsZero(FixedPoint8)|値が0かどうかを判断します|
+|IsZero(FixedPoint8)|値が0かどうかを返します|
 |MaxMagnitude(FixedPoint8, FixedPoint8)|値を比較して大きい方の値を返します|
 |MaxMagnitudeNumber(FixedPoint8, FixedPoint8)|値を比較して大きい方の値を返します|
 |MinMagnitude(FixedPoint8, FixedPoint8)|値を比較して小さい方の値を返します|
 |MinMagnitudeNumber(FixedPoint8, FixedPoint8)|値を比較して小さい方の値を返します|
-|Parse(ReadOnlySpan<char>, NumberStyles, IFormatProvider?)|未実装|
+|Parse(ReadOnlySpan&lt;char&gt;, NumberStyles, IFormatProvider?)|ReadOnlySpan&lt;char&gt;からFixedPoint8に変換します　※速度最適化未実施|
 |Parse(string, NumberStyles, IFormatProvider?)|未実装|
-|TryParse(ReadOnlySpan<char>, NumberStyles, IFormatProvider?, [MaybeNullWhen(false)] out FixedPoint8)|未実装|
-|TryParse([NotNullWhen(true)] string?, NumberStyles, IFormatProvider?, [MaybeNullWhen(false)] out FixedPoint8)|未実装|
-|TryFormat(Span<char> , out int, ReadOnlySpan<char>, IFormatProvider?)|ReadOnlySpan<char>が0以外の時はdecima.TryFormat、0の時はSpan<char>のLengthを見てWriteChars,TryWriteChars。返り値は変換が成功したか失敗したかを示します|
-|TryWriteChars(Span<char> ,out int)|現在の整数値インスタンスの値の、指定したcharスパンへの書式設定を試みます。戻り値は、変換が成功したか失敗したかを示します|
-|WriteChars(ref Span<char>)|現在の整数値インスタンスの値の、指定したcharスパンへの書式設定を試みます|
-|TryWriteChars(Span<byte> ,out int)|現在の整数値インスタンスの値の、指定したbyteスパンへの書式設定を試みます。戻り値は、変換が成功したか失敗したかを示します|
-|WriteChars(ref Span<byte>)|現在の整数値インスタンスの値の、指定したbyteスパンへの書式設定を試みます|
-|ToString(string?, IFormatProvider?)|※速度最適化未実施|
-|Parse(ReadOnlySpan<char>, IFormatProvider?)|読み取り専用のcharを、decimalに変換後、FixedPoint8にキャストします※速度最適化未実施|
-|TryParse(ReadOnlySpan<char>, IFormatProvider?, [MaybeNullWhen(false)] out FixedPoint8)|読み取り専用のcharを、decimalに変換後、FixedPoint8にキャストします。戻り値は、変換が成功したか失敗したかを示します|
-|Parse(string, IFormatProvider?)|文字列をdecimalに変換後、FixedPoint8にキャストします※速度最適化未実施|
-|TryParse([NotNullWhen(true)] string?, IFormatProvider?, [MaybeNullWhen(false)] out FixedPoint8)|文字列をdecimalに変換後、FixedPoint8にキャストします。戻り値は、変換が成功したか失敗したかを示します|
-|Round()|最も近い整数に値を丸めます|
-|Round(int)|指定した小数点以下の桁数に値を丸めます|
-|Floor()|指定した倍精度浮動小数点数以下の数のうち、最大の整数値を返します|
-|Floor(int)|指定した小数点以下の桁数に最大の値を返します|
-|Truncate()|指定した10進数の整数部を計算します|
-|Truncate(int)|指定した小数点以下の桁数に値を計算します|
-|Ceiling()|指定した 10進数以上の数のうち、最小の整数値を返します|
-|Ceiling(int)|指定した倍精度浮動小数点数以上の数のうち、最小の値を返します|
+|TryParse(ReadOnlySpan&lt;char&gt;, NumberStyles, IFormatProvider?, [MaybeNullWhen(false)] out FixedPoint8)|ReadOnlySpan&lt;char&gt;からFixedPoint8に変換を試みます。変換失敗時はfalseが返ります　※速度最適化未実施|
+|TryParse([NotNullWhen(true)] string?, NumberStyles, IFormatProvider?, [MaybeNullWhen(false)] out FixedPoint8)|stringからFixedPoint8に変換を試みます。変換失敗時はfalseが返ります　※速度最適化未実施|
+|TryFormat(Span&lt;char&gt; , out int, ReadOnlySpan&lt;char&gt;, IFormatProvider?)|ReadOnlySpan&lt;char&gt;が0以外の時はdecimal.TryFormatを使用し、0の時はWriteChars,TryWriteCharsを使用します。失敗時はfalseを返します|
+|TryWriteChars(Span&lt;char&gt; ,out int)|引数の値をstringに書き換えます。失敗時はfalseを返します|
+|WriteChars(ref Span&lt;char&gt;)|Span&lt;char&gt;のLengthを返します|
+|TryWriteUtf8(Span&lt;byte&gt; ,out int)|引数の値をutf8に書き換えます。失敗時はfalseを返します|
+|WriteUtf8(ref Span&lt;byte&gt;)|Span&lt;byte&gt;のLengthを返します|
+|ToString(string?, IFormatProvider?)|FixedPoint8からstringに変換します ※速度最適化未実施|
+|Parse(ReadOnlySpan&lt;char&gt;, IFormatProvider?)|ReadOnlySpan&lt;char&gt;をdecimalに変換後、FixedPoint8にキャストします※速度最適化未実施|
+|TryParse(ReadOnlySpan&lt;char&gt;, IFormatProvider?, [MaybeNullWhen(false)] out FixedPoint8)|ReadOnlySpan&lt;char&gt;をdecimalに変換後、FixedPoint8にキャストします。失敗時はfalseを返します ※ 速度最適化未実施|
+|Parse(string, IFormatProvider?)|stringをdecimalに変換後、FixedPoint8にキャストします※速度最適化未実施|
+|TryParse([NotNullWhen(true)] string?, IFormatProvider?, [MaybeNullWhen(false)] out FixedPoint8)|stringをdecimalに変換後、FixedPoint8にキャストします。失敗時はfalseを返します ※ 速度最適化未実施|
+|Round()|整数に値を丸めます。丸め方法は四捨五入で0.5の時はは1つ上の桁が偶数になるように丸めます(銀行丸め)|
+|Round(int)|指定した小数点以下の桁数に値を丸めます。丸め方法は四捨五入で0.5の時はは1つ上の桁が偶数になるように丸めます(銀行丸め)|
+|Floor()|整数に値を丸めます。丸め方法は負の最大値に近づくように丸めます|
+|Floor(int)|指定した小数点以下の桁数に値を丸めます。丸め方法は負の最大値に近づくように丸めます|
+|Truncate()|整数に値を丸めます。丸め方法は0に近づくように丸めます|
+|Truncate(int)|指定した小数点以下の桁数に値を丸めます。丸め方法は0に近づくように丸めます|
+|Ceiling()|整数に値を丸めます。丸め方法は正の最大値に近づくように丸めます|
+|Ceiling(int)|指定した小数点以下の桁数に値を丸めます。丸め方法は正の最大値に近づくように丸めます|
 
 
 ■ 実装説明
