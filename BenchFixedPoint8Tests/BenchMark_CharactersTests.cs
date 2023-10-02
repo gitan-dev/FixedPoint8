@@ -84,6 +84,19 @@ namespace Gitan.FixedPoint8.Tests
             check = writeUtf8.buffer[..writeUtf8.offset].Select(x => (char)x).ToArray();
             Assert.IsTrue(origin.SequenceEqual(check));
         }
-#pragma warning restore IDE0042
+
+        /////////////////////////////////////// WriteCharsUtf8IBufferWriter
+        [TestMethod()]
+        public void WriteUtf8CharsIbufferWriterTest()
+        {
+            var writeChars = instance.FixedPoint8_WriteChars();
+            var writeCharsIBuffer = instance.FixedPoint8_WriteCharsIBufferWriter();
+            Assert.IsTrue(writeChars.buffer.AsSpan(0, writeChars.offset).SequenceEqual(writeCharsIBuffer.WrittenSpan));
+
+            var writeUtf8 = instance.FixedPoint8_WriteUtf8();
+            var writeUtf8IBuffer = instance.FixedPoint8_WriteUtf8IBufferWriter();
+            Assert.IsTrue(writeUtf8.buffer.AsSpan(0, writeUtf8.offset).SequenceEqual(writeUtf8IBuffer.WrittenSpan));
+        }
+#pragma warning restore IDE0042 
     }
 }

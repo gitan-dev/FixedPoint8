@@ -1,5 +1,6 @@
 ﻿
 using BenchmarkDotNet.Attributes;
+using System.Buffers;
 using System.Text;
 
 namespace Gitan.FixedPoint8;
@@ -110,7 +111,6 @@ public class BenchMark_Characters
         return list;
     }
 
-
     [Benchmark]
     public int StringToInt()
     {
@@ -177,7 +177,7 @@ public class BenchMark_Characters
         return result;
     }
 
-    /////////////////////////////////////// GetUtf8
+    ///////////////////////////////////////// GetUtf8
 
     [Benchmark]
     public int IntToString()
@@ -244,6 +244,8 @@ public class BenchMark_Characters
 
     static readonly char[] _charBuffer = new char[100];
     static readonly byte[] _byteBuffer = new byte[100];
+    static readonly System.Buffers.ArrayBufferWriter<char> _charBufferIBuffer = new(100);
+    static readonly System.Buffers.ArrayBufferWriter<byte> _byteBufferIBuffer = new(100);
 
     //Span<char>
     [Benchmark]
@@ -274,6 +276,17 @@ public class BenchMark_Characters
         return (_charBuffer, offset);
     }
 
+    [Benchmark]
+    public ArrayBufferWriter<char> FixedPoint8_WriteCharsIBufferWriter()
+    {
+        _charBufferIBuffer.Clear();
+
+        foreach (var value in _fp8Values)
+        {
+            value.WriteChars(_charBufferIBuffer);
+        }
+        return _charBufferIBuffer;
+    }
 
     // Span<byte>
     [Benchmark]
@@ -304,26 +317,39 @@ public class BenchMark_Characters
 
         return (_byteBuffer, offset);
     }
+
+    [Benchmark]
+    public ArrayBufferWriter<byte> FixedPoint8_WriteUtf8IBufferWriter()
+    {
+        _byteBufferIBuffer.Clear();
+
+        foreach (var value in _fp8Values)
+        {
+            value.WriteUtf8(_byteBufferIBuffer);
+        }
+        return _byteBufferIBuffer;
+    }
 }
 
-//|                    Method |        Mean |     Error |    StdDev |
-//|-------------------------- |------------:|----------:|----------:|
-//|               StringToInt |   184.51 ns |  3.557 ns |  3.493 ns |
-//|            StringToDouble |   613.94 ns | 11.745 ns | 12.061 ns |
-//|           StringToDecimal |   645.34 ns |  6.548 ns |  5.468 ns |
-//|       StringToFixedPoint8 |    92.35 ns |  1.877 ns |  3.834 ns |
-//|         Utf8ToFixedPoint8 |    98.14 ns |  1.974 ns |  3.559 ns |
-//|    CharArrayToFixedPoint8 |    88.89 ns |  1.793 ns |  3.324 ns |
+//|                    Method           |        Mean |     Error |    StdDev |
+//|--------------------------------     |------------:|----------:|----------:|
+//|               StringToInt           |   184.51 ns |  3.557 ns |  3.493 ns |
+//|            StringToDouble           |   613.94 ns | 11.745 ns | 12.061 ns |
+//|           StringToDecimal           |   645.34 ns |  6.548 ns |  5.468 ns |
+//|       StringToFixedPoint8           |    92.35 ns |  1.877 ns |  3.834 ns |
+//|         Utf8ToFixedPoint8           |    98.14 ns |  1.974 ns |  3.559 ns |
+//|    CharArrayToFixedPoint8           |    88.89 ns |  1.793 ns |  3.324 ns |
 
-//|               IntToString |   205.36 ns |  3.528 ns |  4.587 ns |
-//|            DoubleToString | 1,244.79 ns | 24.343 ns | 26.047 ns |
-//|           DecimalToString |   683.67 ns | 13.112 ns | 12.265 ns |
-//|       FixedPoint8ToString |   240.25 ns |  4.462 ns |  3.956 ns |
-//|         FixedPoint8ToUtf8 |   209.83 ns |  3.921 ns |  7.070 ns |
+//|               IntToString           |   205.36 ns |  3.528 ns |  4.587 ns |
+//|            DoubleToString           | 1,244.79 ns | 24.343 ns | 26.047 ns |
+//|           DecimalToString           |   683.67 ns | 13.112 ns | 12.265 ns |
+//|       FixedPoint8ToString           |   240.25 ns |  4.462 ns |  3.956 ns |
+//|         FixedPoint8ToUtf8           |   209.83 ns |  3.921 ns |  7.070 ns |
 
-//| FixedPoint8_TryWriteChars |   107.01 ns |  2.154 ns |  3.716 ns |
-//|    FixedPoint8_WriteChars |   102.87 ns |  2.105 ns |  3.019 ns |
-//|  FixedPoint8_TryWriteUtf8 |   104.94 ns |  2.116 ns |  3.869 ns |
-//|     FixedPoint8_WriteUtf8 |   105.42 ns |  2.134 ns |  3.060 ns |
-
+//| FixedPoint8_TryWriteChars           |    106.4 ns |   2.11 ns |   2.17 ns |
+//| FixedPoint8_WriteChars              |    102.7 ns |   2.09 ns |   2.49 ns |
+//| FixedPoint8_WriteCharsIBufferWriter |    151.5 ns |   3.05 ns |   4.47 ns |
+//| FixedPoint8_TryWriteUtf8            |    105.3 ns |   2.13 ns |   2.92 ns |
+//| FixedPoint8_WriteUtf8               |    104.5 ns |   2.08 ns |   2.56 ns |
+//| FixedPoint8_WriteUtf8IBufferWriter  |    147.7 ns |   3.00 ns |   3.08 ns |
 

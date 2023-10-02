@@ -25,9 +25,9 @@ FixedPoint8を使用する方法を以下に記載します。
 
     public void fp8Test()       
     {
-        var v1 = FixedPoint8.FromDouble(12.34);        
-        var v2 = FixedPoint8.FromDecimal(12.34m);
-        //内部的には、Int64の1234000000となる。
+        var v1 = (FixedPoint8)12.34;        
+        var v2 = (FixedPoint8)23.45;
+        //v1は内部的にInt64の1234000000となる。
 
         var add = v1 + v2;
         var sub = v1 - v2;
@@ -43,6 +43,8 @@ NuGetを使用してGitan.Utf8Json_FixedPoint8をインストールします。�
 Gitan.Utf8Json_FixedPoint8はJsonとFixedPoint8をRead,Writeします。
 
 ReadFixedPoint8,WriteFixedPoint8の処理は[Utf8Json](https://github.com/neuecc/Utf8Json/tree/master/src/Utf8Json)の[NumberConverter](https://github.com/neuecc/Utf8Json/blob/master/src/Utf8Json/Internal/NumberConverter.cs)を部分引用しています。
+
+Utf8Jsonを使用してFixedPoint8シリアライズ/デシリアライズする方法を以下に記載します。
 
     using Gitan.FixedPoint8;
 
@@ -75,8 +77,7 @@ ReadFixedPoint8,WriteFixedPoint8の処理は[Utf8Json](https://github.com/neuecc
         }
     }
 
-
-Utf8Jsonを使用してFixedPoint8シリアライズ/デシリアライズする方法を以下に記載します。
+Reader.Writerで読み書きする方法を以下に記載します。
 
     using Gitan.FixedPoint8;
 
@@ -105,8 +106,7 @@ Utf8Jsonを使用してFixedPoint8シリアライズ/デシリアライズする
 
         public void CheckFixedPoint8(ReadOnlySpan<byte> json,string resultString)
         {
-            var jsonArray = json.ToArray();
-            var reader = new Utf8Json.JsonReader(jsonArray);
+            var reader = new Utf8Json.JsonReader(json.ToArray());
             var result = reader.ReadFixedPoint8();
             Assert.IsTrue(result.ToString() == resultString);
 
@@ -792,11 +792,27 @@ byte[]でReader,Writer,Deserialize,Serializeの比較
 |Parse(string)|文字列をFixedPoint8に変換します|
 |Parse(ReadOnlySpan&lt;char&gt;)|ReadOnlySpan&lt;char&gt;からFixedPoint8に変換します|
 |Parse(ReadOnlySpan&lt;byte&gt;)|ReadOnlySpan&lt;byte&gt;からFixedPoint8に変換します|
+|Parse(string, IFormatProvider?)|stringをdecimalに変換後、FixedPoint8にキャストします※速度最適化未実施|
+|Parse(ReadOnlySpan&lt;char&gt;, IFormatProvider?)|ReadOnlySpan&lt;char&gt;をdecimalに変換後、FixedPoint8にキャストします※速度最適化未実施|
+|Parse(string, NumberStyles, IFormatProvider?)|stringからFixedPoint8に変換します　※速度最適化未実施|
+|Parse(ReadOnlySpan&lt;char&gt;, NumberStyles, IFormatProvider?)|ReadOnlySpan&lt;char&gt;からFixedPoint8に変換します　※速度最適化未実施|
 |TryParse([NotNullWhen(true)] string?, out FixedPoint8)|文字列をFixedPoint8に変換を試みます。変換失敗時はfalseを返します|
 |TryParse(ReadOnlySpan&lt;char&gt;, out FixedPoint8)|ReadOnlySpan&lt;char&gt;からFixedPoint8に変換を試みます。変換失敗時はfalseが返ります|
 |TryParse(ReadOnlySpan&lt;byte&gt;, out FixedPoint8)|ReadOnlySpan&lt;byte&gt;からFixedPoint8に変換を試みます。変換失敗時はfalseが返ります|
+|TryParse([NotNullWhen(true)] string?, IFormatProvider?, [MaybeNullWhen(false)] out FixedPoint8)|stringをdecimalに変換後、FixedPoint8にキャストします。失敗時はfalseを返します ※ 速度最適化未実施|
+|TryParse(ReadOnlySpan&lt;char&gt;, IFormatProvider?, [MaybeNullWhen(false)] out FixedPoint8)|ReadOnlySpan&lt;char&gt;をdecimalに変換後、FixedPoint8にキャストします。失敗時はfalseを返します ※ 速度最適化未実施|
+|TryParse([NotNullWhen(true)] string?, NumberStyles, IFormatProvider?, [MaybeNullWhen(false)] out FixedPoint8)|stringからFixedPoint8に変換を試みます。変換失敗時はfalseが返ります　※速度最適化未実施|
+|TryParse(ReadOnlySpan&lt;char&gt;, NumberStyles, IFormatProvider?, [MaybeNullWhen(false)] out FixedPoint8)|ReadOnlySpan&lt;char&gt;からFixedPoint8に変換を試みます。変換失敗時はfalseが返ります　※速度最適化未実施|
 |ToString()|FixedPoint8からstringに変換します|
+|ToString(string?, IFormatProvider?)|FixedPoint8からstringに変換します ※速度最適化未実施|
 |ToUtf8()|FixedPoint8からUTF8(byte[])に変換します|
+|TryFormat(Span&lt;char&gt; , out int, ReadOnlySpan&lt;char&gt;, IFormatProvider?)|ReadOnlySpan&lt;char&gt;が0以外の時はdecimal.TryFormatを使用し、0の時はWriteChars,TryWriteCharsを使用します。失敗時はfalseを返します|
+|WriteChars(ref Span&lt;char&gt;)|Span&lt;char&gt;のLengthを返します|
+|WriteChars(IBufferWriter&lt;char&gt;)|IBufferWriterに対してUtf16で書き込みを行います|
+|WriteUtf8(ref Span&lt;byte&gt;)|Span&lt;byte&gt;のLengthを返します|
+|WriteUtf8(IBufferWriter&lt;byte&gt;)|IBufferWriterに対してUtf8で書き込みを行います|
+|TryWriteChars(Span&lt;char&gt; ,out int)|引数の値をstringに書き換えます。失敗時はfalseを返します|
+|TryWriteUtf8(Span&lt;byte&gt; ,out int)|引数の値をutf8に書き換えます。失敗時はfalseを返します|
 |Equals(object?)|自分自身とobjectが等しいかどうかを返します|
 |Equals(FixedPoint8)|自分自身と引数の値が等しいかどうかを返します|
 |GetHashCode()|この値のハッシュコードを返します|
@@ -824,20 +840,6 @@ byte[]でReader,Writer,Deserialize,Serializeの比較
 |MaxMagnitudeNumber(FixedPoint8, FixedPoint8)|値を比較して大きい方の値を返します|
 |MinMagnitude(FixedPoint8, FixedPoint8)|値を比較して小さい方の値を返します|
 |MinMagnitudeNumber(FixedPoint8, FixedPoint8)|値を比較して小さい方の値を返します|
-|Parse(ReadOnlySpan&lt;char&gt;, NumberStyles, IFormatProvider?)|ReadOnlySpan&lt;char&gt;からFixedPoint8に変換します　※速度最適化未実施|
-|Parse(string, NumberStyles, IFormatProvider?)|未実装|
-|TryParse(ReadOnlySpan&lt;char&gt;, NumberStyles, IFormatProvider?, [MaybeNullWhen(false)] out FixedPoint8)|ReadOnlySpan&lt;char&gt;からFixedPoint8に変換を試みます。変換失敗時はfalseが返ります　※速度最適化未実施|
-|TryParse([NotNullWhen(true)] string?, NumberStyles, IFormatProvider?, [MaybeNullWhen(false)] out FixedPoint8)|stringからFixedPoint8に変換を試みます。変換失敗時はfalseが返ります　※速度最適化未実施|
-|TryFormat(Span&lt;char&gt; , out int, ReadOnlySpan&lt;char&gt;, IFormatProvider?)|ReadOnlySpan&lt;char&gt;が0以外の時はdecimal.TryFormatを使用し、0の時はWriteChars,TryWriteCharsを使用します。失敗時はfalseを返します|
-|TryWriteChars(Span&lt;char&gt; ,out int)|引数の値をstringに書き換えます。失敗時はfalseを返します|
-|WriteChars(ref Span&lt;char&gt;)|Span&lt;char&gt;のLengthを返します|
-|TryWriteUtf8(Span&lt;byte&gt; ,out int)|引数の値をutf8に書き換えます。失敗時はfalseを返します|
-|WriteUtf8(ref Span&lt;byte&gt;)|Span&lt;byte&gt;のLengthを返します|
-|ToString(string?, IFormatProvider?)|FixedPoint8からstringに変換します ※速度最適化未実施|
-|Parse(ReadOnlySpan&lt;char&gt;, IFormatProvider?)|ReadOnlySpan&lt;char&gt;をdecimalに変換後、FixedPoint8にキャストします※速度最適化未実施|
-|TryParse(ReadOnlySpan&lt;char&gt;, IFormatProvider?, [MaybeNullWhen(false)] out FixedPoint8)|ReadOnlySpan&lt;char&gt;をdecimalに変換後、FixedPoint8にキャストします。失敗時はfalseを返します ※ 速度最適化未実施|
-|Parse(string, IFormatProvider?)|stringをdecimalに変換後、FixedPoint8にキャストします※速度最適化未実施|
-|TryParse([NotNullWhen(true)] string?, IFormatProvider?, [MaybeNullWhen(false)] out FixedPoint8)|stringをdecimalに変換後、FixedPoint8にキャストします。失敗時はfalseを返します ※ 速度最適化未実施|
 |Round()|整数に値を丸めます。丸め方法は四捨五入で0.5の時はは1つ上の桁が偶数になるように丸めます(銀行丸め)|
 |Round(int)|指定した小数点以下の桁数に値を丸めます。丸め方法は四捨五入で0.5の時はは1つ上の桁が偶数になるように丸めます(銀行丸め)|
 |Floor()|整数に値を丸めます。丸め方法は負の最大値に近づくように丸めます|
@@ -850,8 +852,10 @@ byte[]でReader,Writer,Deserialize,Serializeの比較
 
 ■ 実装説明
 
-・ 偶数、奇数判定は速度に重点を置くため％を使用せずに実装しています。
-
 ・ FixedPointとUtf8の相互変換はatoi/itoaを使用、ソースコードは[Utf8Json](https://github.com/neuecc/Utf8Json)からの移植を行いました。
 
-・ //powerArrayの話
+・ 内部の計算はできる限りuint,ulongを使うように実装しています。(int,longより乗算、除算が速いため)
+
+・ 10,100,1000・・・で乗算、除算する場合、ループではなく配列を使用しています。
+
+・ 偶数、奇数判定は速度に重点を置くため％を使用せずに実装しています。

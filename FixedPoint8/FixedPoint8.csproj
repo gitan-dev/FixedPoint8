@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <Version>0.9.2</Version>
+    <Version>0.9.4</Version>
     <Title>Gitan.FixedPoint8</Title>
     <PackageId>Gitan.FixedPoint8</PackageId>
     <Company>Soffice Co., Ltd.</Company>
