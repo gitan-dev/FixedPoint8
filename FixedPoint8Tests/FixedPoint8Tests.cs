@@ -1165,9 +1165,6 @@ public class FixedPoint8Tests
                     Assert.IsTrue((decimal)fp8Floor2 == mathFloor2);
                 }
 
-
-
-
                 // Truncate
                 var mathTruncate = Math.Truncate(decimal_a);
                 var fp8Truncate = fp8.Truncate();
@@ -1253,21 +1250,87 @@ public class FixedPoint8Tests
     public void MinValueMathTest()
     {
         decimal value = -92233720368.54775808m;
+        FixedPoint8 fp8Value = (FixedPoint8)value;
 
-        //var mRound = Math.Round(value);
-        //var mFloor = Math.Floor(value);
-        //var mTruncate = Math.Truncate(value);
-        //var mCeiling = Math.Ceiling(value);
+        // Round
+        Assert.IsTrue(fp8Value.Round().ToString() == "92233720368"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Round(-10).ToString() == "-90000000000"); // 実行可能
+        Assert.IsTrue(fp8Value.Round(-9).ToString() == "-92000000000"); // 実行可能
+        Assert.IsTrue(fp8Value.Round(-8).ToString() == "-92200000000"); // 実行可能
+        Assert.IsTrue(fp8Value.Round(-7).ToString() == "-92230000000"); // 実行可能
+        Assert.IsTrue(fp8Value.Round(-6).ToString() == "92233440737.09551616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Round(-5).ToString() == "-92233700000"); // 実行可能
+        Assert.IsTrue(fp8Value.Round(-4).ToString() == "-92233720000"); // 実行可能
+        Assert.IsTrue(fp8Value.Round(-3).ToString() == "-92233720000"); // 実行可能
+        Assert.IsTrue(fp8Value.Round(-2).ToString() == "92233720337.09551616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Round(-1).ToString() == "92233720367.09551616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Round(1).ToString() == "-92233720368.5"); // 実行可能
+        Assert.IsTrue(fp8Value.Round(2).ToString() == "92233720368.54551616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Round(3).ToString() == "92233720368.54751616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Round(4).ToString() == "92233720368.54771616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Round(5).ToString() == "92233720368.54775616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Round(6).ToString() == "-92233720368.547758"); // 実行可能
+        Assert.IsTrue(fp8Value.Round(7).ToString() == "92233720368.54775806"); // オーバーフローが発生する。Exceptionが発生しないこと
 
-        //var fp8Round = ((FixedPoint8)value).Round();             
-        //var fp8Floor = ((FixedPoint8)value).Floor();             
-        //var fp8Truncate = ((FixedPoint8)value).Truncate();
-        //var fp8Ceiling = ((FixedPoint8)value).Ceiling();
+        //Floor
+        Assert.IsTrue(fp8Value.Floor().ToString() == "92233720367");　// オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Floor(-10).ToString() == "84467440737.09551616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Floor(-9).ToString() == "91467440737.09551616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Floor(-8).ToString() == "92167440737.09551616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Floor(-7).ToString() == "92227440737.09551616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Floor(-6).ToString() == "92233440737.09551616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Floor(-5).ToString() == "92233640737.09551616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Floor(-4).ToString() == "92233710737.09551616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Floor(-3).ToString() == "92233719737.09551616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Floor(-2).ToString() == "92233720337.09551616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Floor(-1).ToString() == "92233720367.09551616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Floor(1).ToString() == "92233720368.49551616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Floor(2).ToString() == "92233720368.54551616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Floor(3).ToString() == "92233720368.54751616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Floor(4).ToString() == "92233720368.54771616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Floor(5).ToString() == "92233720368.54775616"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Floor(6).ToString() == "92233720368.54775716"); // オーバーフローが発生する。Exceptionが発生しないこと
+        Assert.IsTrue(fp8Value.Floor(7).ToString() == "92233720368.54775806"); // オーバーフローが発生する。Exceptionが発生しないこと
 
-        Assert.IsTrue(((FixedPoint8)value).Round().ToString() == "92233720368");
-        Assert.IsTrue(((FixedPoint8)value).Floor().ToString() == "92233720368.09551616");
-        Assert.IsTrue(((FixedPoint8)value).Truncate().ToString() == "-92233720368");
-        Assert.IsTrue(((FixedPoint8)value).Ceiling().ToString() == "-92233720368");
+        //Truncate
+        Assert.IsTrue(fp8Value.Truncate().ToString() == "-92233720368"); // 実行可能
+        Assert.IsTrue(fp8Value.Truncate(-10).ToString() == "-90000000000"); // 実行可能
+        Assert.IsTrue(fp8Value.Truncate(-9).ToString() == "-92000000000"); // 実行可能
+        Assert.IsTrue(fp8Value.Truncate(-8).ToString() == "-92200000000"); // 実行可能
+        Assert.IsTrue(fp8Value.Truncate(-7).ToString() == "-92230000000"); // 実行可能
+        Assert.IsTrue(fp8Value.Truncate(-6).ToString() == "-92233000000"); // 実行可能
+        Assert.IsTrue(fp8Value.Truncate(-5).ToString() == "-92233700000"); // 実行可能
+        Assert.IsTrue(fp8Value.Truncate(-4).ToString() == "-92233720000"); // 実行可能
+        Assert.IsTrue(fp8Value.Truncate(-3).ToString() == "-92233720000"); // 実行可能
+        Assert.IsTrue(fp8Value.Truncate(-2).ToString() == "-92233720300"); // 実行可能
+        Assert.IsTrue(fp8Value.Truncate(-1).ToString() == "-92233720360"); // 実行可能
+        Assert.IsTrue(fp8Value.Truncate(1).ToString() == "-92233720368.5"); // 実行可能
+        Assert.IsTrue(fp8Value.Truncate(2).ToString() == "-92233720368.54"); // 実行可能
+        Assert.IsTrue(fp8Value.Truncate(3).ToString() == "-92233720368.547"); // 実行可能
+        Assert.IsTrue(fp8Value.Truncate(4).ToString() == "-92233720368.5477"); // 実行可能
+        Assert.IsTrue(fp8Value.Truncate(5).ToString() == "-92233720368.54775"); // 実行可能
+        Assert.IsTrue(fp8Value.Truncate(6).ToString() == "-92233720368.547758"); // 実行可能
+        Assert.IsTrue(fp8Value.Truncate(7).ToString() == "-92233720368.547758"); // 実行可能
+
+        //Ceiling
+        Assert.IsTrue(fp8Value.Ceiling().ToString() == "-92233720368"); // 実行可能
+        Assert.IsTrue(fp8Value.Ceiling(-10).ToString() == "-90000000000"); // 実行可能
+        Assert.IsTrue(fp8Value.Ceiling(-9).ToString() == "-92000000000"); // 実行可能
+        Assert.IsTrue(fp8Value.Ceiling(-8).ToString() == "-92200000000"); // 実行可能
+        Assert.IsTrue(fp8Value.Ceiling(-7).ToString() == "-92230000000"); // 実行可能
+        Assert.IsTrue(fp8Value.Ceiling(-6).ToString() == "-92233000000"); // 実行可能
+        Assert.IsTrue(fp8Value.Ceiling(-5).ToString() == "-92233700000"); // 実行可能
+        Assert.IsTrue(fp8Value.Ceiling(-4).ToString() == "-92233720000"); // 実行可能
+        Assert.IsTrue(fp8Value.Ceiling(-3).ToString() == "-92233720000"); // 実行可能
+        Assert.IsTrue(fp8Value.Ceiling(-2).ToString() == "-92233720300"); // 実行可能
+        Assert.IsTrue(fp8Value.Ceiling(-1).ToString() == "-92233720360"); // 実行可能
+        Assert.IsTrue(fp8Value.Ceiling(1).ToString() == "-92233720368.5"); // 実行可能
+        Assert.IsTrue(fp8Value.Ceiling(2).ToString() == "-92233720368.54"); // 実行可能
+        Assert.IsTrue(fp8Value.Ceiling(3).ToString() == "-92233720368.547"); // 実行可能
+        Assert.IsTrue(fp8Value.Ceiling(4).ToString() == "-92233720368.5477"); // 実行可能
+        Assert.IsTrue(fp8Value.Ceiling(5).ToString() == "-92233720368.54775"); // 実行可能
+        Assert.IsTrue(fp8Value.Ceiling(6).ToString() == "-92233720368.547758"); // 実行可能
+        Assert.IsTrue(fp8Value.Ceiling(7).ToString() == "-92233720368.547758"); // 実行可能
     }
 
 
