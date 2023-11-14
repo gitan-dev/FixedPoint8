@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace Gitan.FixedPoint8;
 
-public readonly struct FixedPoint8 : INumber<FixedPoint8>
+public readonly struct FixedPoint8 : INumber<FixedPoint8>, IMinMaxValue<FixedPoint8>
 {
 
     public static FixedPoint8 MaxValue { get; } = new FixedPoint8(long.MaxValue);
@@ -58,12 +58,12 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
     }
 
     public static FixedPoint8 Parse(string s)
-    {       
-        if(TryParse(s.AsSpan(), out var result))
+    {
+        if (TryParse(s.AsSpan(), out var result))
         {
             return result;
         }
-        ThrowFormatException("正しい形式ではありません");
+        ThrowFormatException($"The input string '{s}' was not in a correct format.");
         return Zero;
     }
 
@@ -73,7 +73,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
         {
             return result;
         }
-        ThrowFormatException("正しい形式ではありません");
+        ThrowFormatException($"The input ReadOnlySpan<char> '{s}' was not in a correct format.");
         return Zero;
     }
 
@@ -83,7 +83,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
         {
             return result;
         }
-        ThrowFormatException("正しい形式ではありません");
+        ThrowFormatException($"The input ReadOnlySpan<byte> '{utf8.ToString()}' was not in a correct format.");
         return Zero;
     }
 
@@ -93,7 +93,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
         var decimalValue = decimal.Parse(s, provider);
         return (FixedPoint8)decimalValue;
     }
-    
+
     // 速度最適化未実施
     public static FixedPoint8 Parse(ReadOnlySpan<char> s, IFormatProvider? provider)
     {
@@ -1848,7 +1848,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
 
     public static bool IsNormal(FixedPoint8 value)
     {
-        if(value == FixedPoint8.Zero)
+        if (value == FixedPoint8.Zero)
         {
             return false;
         }
@@ -2106,7 +2106,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
         {
             if ((absOverRound & 1) == 0)
             {
-                return new FixedPoint8((long)(absOverRound * overDiv) * sign) ;
+                return new FixedPoint8((long)(absOverRound * overDiv) * sign);
             }
             return new FixedPoint8((long)((absOverRound + 1) * overDiv) * sign);
         }
@@ -2329,11 +2329,3 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>
     static uint Div100(uint value) => value * 5243 >> 19;
     static uint Div10(uint value) => value * 6554 >> 16;
 }
-
-
-
-
-
-
-
-
