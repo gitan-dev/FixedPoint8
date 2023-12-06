@@ -1,5 +1,4 @@
-﻿
-using Utf8Json;
+﻿using Utf8Json;
 using BenchmarkDotNet.Attributes;
 using System.Text;
 

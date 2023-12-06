@@ -97,6 +97,6 @@ namespace Gitan.FixedPoint8.Tests
             var writeUtf8IBuffer = instance.FixedPoint8_WriteUtf8IBufferWriter();
             Assert.IsTrue(writeUtf8.buffer.AsSpan(0, writeUtf8.offset).SequenceEqual(writeUtf8IBuffer.WrittenSpan));
         }
-#pragma warning restore IDE0042 
+#pragma warning restore IDE0042
     }
 }

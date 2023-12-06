@@ -1,3 +1,22 @@
+<<<<<<< HEAD
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<TargetFrameworks>net8.0;net7.0</TargetFrameworks>
+	<LangVersion>latest</LangVersion>
+	<Nullable>enable</Nullable>
+    <Version>1.0.2</Version>
+    <Title>Gitan.FixedPoint8</Title>
+    <PackageId>Gitan.FixedPoint8</PackageId>
+    <Company>Soffice Co., Ltd.</Company>
+    <Product>Gitan.FixedPoint8</Product>
+    <Authors>Soffice Co., Ltd.</Authors>
+    <Description>High Performance Fixed decimal point with 8 digits after the decimal point.</Description>
+    <PackageProjectUrl>https://github.com/gitan-dev/FixedPoint8</PackageProjectUrl>
+  </PropertyGroup>
+
+</Project>
+=======
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
@@ -15,3 +34,4 @@
   </PropertyGroup>
 
 </Project>
+>>>>>>> 1c034ee14a2fed2c550bfe840c3700753e00637a

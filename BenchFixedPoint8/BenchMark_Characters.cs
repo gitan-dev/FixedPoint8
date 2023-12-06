@@ -1,5 +1,4 @@
-﻿
-using BenchmarkDotNet.Attributes;
+﻿using BenchmarkDotNet.Attributes;
 using System.Buffers;
 using System.Text;
 

@@ -351,3 +351,9 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/BenchFixedPoint8/BenchFixedPoint8.csproj.BASE.csproj
+/BenchFixedPoint8/BenchFixedPoint8.csproj.LOCAL.csproj
+/BenchFixedPoint8/BenchFixedPoint8.csproj.REMOTE.csproj
+/FixedPoint8/FixedPoint8.cs.BASE.cs
+/FixedPoint8/FixedPoint8.cs.LOCAL.cs
+/FixedPoint8/FixedPoint8.cs.REMOTE.cs

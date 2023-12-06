@@ -1,3 +1,26 @@
+<<<<<<< HEAD
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+	<TargetFrameworks>net8.0;net7.0</TargetFrameworks>
+	<LangVersion>latest</LangVersion>
+	<ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>0.9.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FixedPoint8\FixedPoint8.csproj" />
+    <ProjectReference Include="..\Utf8Json_FixedPoint8\Utf8Json_FixedPoint8.csproj" />
+  </ItemGroup>
+
+</Project>
+=======
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
@@ -20,3 +43,4 @@
   </ItemGroup>
 
 </Project>
+>>>>>>> 1c034ee14a2fed2c550bfe840c3700753e00637a
