@@ -264,34 +264,60 @@ Reader.Writerで読み書きする方法を以下に記載します。
 FixedPoint8との乗算は遅いので使用を推奨しない
 
 
-|               Method |            Mean |          Error |         StdDev |          Median |
-|--------------------- |----------------:|---------------:|---------------:|----------------:|
-|              Mul2Int |   4,405.6419 ns |     75.6055 ns |     67.0223 ns |   4,378.1532 ns |
-|           Mul2Double |  11,597.1852 ns |    110.5118 ns |     97.9658 ns |  11,550.6607 ns |
-|          Mul2Decimal | 171,681.9318 ns |  2,222.0380 ns |  1,969.7788 ns | 171,415.0513 ns |
-|   MulInt2FixedPoint8 |   5,095.5557 ns |    229.8811 ns |    652.1343 ns |   5,063.8119 ns |
-|      Mul2FixedPoint8 | 740,576.5320 ns | 14,567.0630 ns | 14,306.8037 ns | 736,481.2988 ns |
-|             Mul10Int |   4,198.6275 ns |     59.8123 ns |     55.9485 ns |   4,207.6736 ns |
-|          Mul10Double |  11,566.6072 ns |     85.9625 ns |     80.4094 ns |  11,562.5351 ns |
-|         Mul10Decimal | 182,478.7274 ns |  3,625.5590 ns |  6,444.4275 ns | 181,066.9189 ns |
-|  MulInt10FixedPoint8 |   7,960.9773 ns |    153.5037 ns |    188.5164 ns |   7,924.3217 ns |
-|     Mul10FixedPoint8 | 737,801.1133 ns | 13,234.3068 ns | 12,379.3788 ns | 739,840.6250 ns |
-|              Add2Int |   5,130.1053 ns |    206.7801 ns |    603.1874 ns |   5,062.9269 ns |
-|           Add2Double |  11,804.3303 ns |    129.1374 ns |    114.4769 ns |  11,841.0278 ns |
-|          Add2Decimal | 229,580.8140 ns |  3,002.1355 ns |  2,661.3149 ns | 229,196.7773 ns |
-|      Add2FixedPoint8 |   8,053.5049 ns |     95.3321 ns |     84.5094 ns |   8,045.7703 ns |
-|             Add10Int |   5,179.5364 ns |    199.3422 ns |    581.4905 ns |   5,021.6770 ns |
-|          Add10Double |  11,711.3880 ns |    170.7424 ns |    159.7126 ns |  11,681.6528 ns |
-|         Add10Decimal | 227,311.7928 ns |  3,070.6181 ns |  2,872.2581 ns | 226,703.4302 ns |
-|     Add10FixedPoint8 |   8,009.1789 ns |     74.9214 ns |     66.4159 ns |   7,994.0407 ns |
-|              Sub2Int |   5,222.6691 ns |    258.3863 ns |    761.8579 ns |   4,992.6422 ns |
-|           Sub2Double |  11,577.0315 ns |     98.2322 ns |     87.0803 ns |  11,558.0177 ns |
-|          Sub2Decimal | 236,974.9669 ns |  3,245.1285 ns |  2,876.7219 ns | 236,256.2500 ns |
-|      Sub2FixedPoint8 |   8,148.7481 ns |    118.4674 ns |     98.9257 ns |   8,159.6352 ns |
-|             Sub10Int |   5,108.3281 ns |    219.5566 ns |    640.4570 ns |   4,884.5806 ns |
-|          Sub10Double |  11,752.1292 ns |    231.5493 ns |    237.7841 ns |  11,619.3405 ns |
-|         Sub10Decimal | 229,858.3089 ns |  2,906.6454 ns |  2,718.8779 ns | 228,971.4355 ns |
-|     Sub10FixedPoint8 |   8,629.7839 ns |    163.8589 ns |    323.4414 ns |   8,561.5463 ns |
+| Method               | Runtime  | Mean            | Error          | StdDev         | Median          | Ratio | RatioSD |
+|--------------------- |--------- |----------------:|---------------:|---------------:|----------------:|------:|--------:|
+| Mul2Int              | .NET 7.0 |   4,572.7710 ns |     90.3135 ns |    167.4018 ns |   4,547.3579 ns |  1.00 |    0.00 |
+| Mul2Int              | .NET 8.0 |   4,293.8047 ns |     85.4494 ns |     98.4037 ns |   4,321.8761 ns |  0.94 |    0.05 |
+| Mul2Double           | .NET 7.0 |  11,539.7450 ns |     83.0773 ns |     73.6459 ns |  11,530.6412 ns |  1.00 |    0.00 |
+| Mul2Double           | .NET 8.0 |  11,670.8632 ns |    208.7207 ns |    185.0254 ns |  11,607.7080 ns |  1.01 |    0.02 |
+| Mul2Decimal          | .NET 7.0 | 173,784.9714 ns |  1,794.6919 ns |  1,590.9477 ns | 173,015.0757 ns |  1.00 |    0.00 |
+| Mul2Decimal          | .NET 8.0 | 174,499.1804 ns |  2,715.2168 ns |  2,406.9690 ns | 174,061.7065 ns |  1.00 |    0.02 |
+| MulInt2FixedPoint8   | .NET 7.0 |   5,914.9793 ns |    378.1387 ns |  1,114.9504 ns |   5,873.1972 ns |  1.00 |    0.00 |
+| MulInt2FixedPoint8   | .NET 8.0 |   6,387.5701 ns |    318.3312 ns |    938.6067 ns |   6,996.3493 ns |  1.12 |    0.26 |
+| Mul2FixedPoint8      | .NET 7.0 | 747,730.3516 ns |  7,881.4972 ns |  7,372.3574 ns | 746,037.6953 ns |  1.00 |    0.00 |
+| Mul2FixedPoint8      | .NET 8.0 | 826,037.5698 ns |  8,583.3541 ns |  7,608.9198 ns | 827,765.5273 ns |  1.11 |    0.01 |
+| Mul10Int             | .NET 7.0 |   4,246.9570 ns |     81.2063 ns |     99.7287 ns |   4,233.6533 ns |  1.00 |    0.00 |
+| Mul10Int             | .NET 8.0 |   4,161.1268 ns |     71.3323 ns |     63.2342 ns |   4,158.4396 ns |  0.98 |    0.03 |
+| Mul10Double          | .NET 7.0 |  11,548.6852 ns |     85.2441 ns |     75.5667 ns |  11,531.9984 ns |  1.00 |    0.00 |
+| Mul10Double          | .NET 8.0 |  11,569.2242 ns |     55.8982 ns |     49.5523 ns |  11,564.2693 ns |  1.00 |    0.01 |
+| Mul10Decimal         | .NET 7.0 | 176,852.5651 ns |  3,412.0240 ns |  3,191.6094 ns | 176,322.6074 ns |  1.00 |    0.00 |
+| Mul10Decimal         | .NET 8.0 | 179,393.4745 ns |  3,239.9466 ns |  3,856.9260 ns | 178,678.8818 ns |  1.02 |    0.03 |
+| MulInt10FixedPoint8  | .NET 7.0 |   6,617.2033 ns |    131.7600 ns |    166.6342 ns |   6,628.3234 ns |  1.00 |    0.00 |
+| MulInt10FixedPoint8  | .NET 8.0 |   6,653.7935 ns |    132.8328 ns |    206.8046 ns |   6,731.1947 ns |  1.01 |    0.04 |
+| Mul10FixedPoint8     | .NET 7.0 | 741,841.2956 ns |  7,668.2957 ns |  7,172.9285 ns | 741,695.3125 ns |  1.00 |    0.00 |
+| Mul10FixedPoint8     | .NET 8.0 | 820,721.6471 ns | 12,885.8423 ns | 12,053.4248 ns | 822,087.6953 ns |  1.11 |    0.02 |
+| Add2Int              | .NET 7.0 |   5,654.9791 ns |    304.2097 ns |    896.9693 ns |   5,794.1940 ns |  1.00 |    0.00 |
+| Add2Int              | .NET 8.0 |   5,847.5261 ns |    275.2209 ns |    811.4950 ns |   6,399.6235 ns |  1.06 |    0.24 |
+| Add2Double           | .NET 7.0 |  11,531.5492 ns |     65.1783 ns |     54.4268 ns |  11,533.6807 ns |  1.00 |    0.00 |
+| Add2Double           | .NET 8.0 |  11,577.4798 ns |    107.3107 ns |    100.3785 ns |  11,564.0594 ns |  1.01 |    0.01 |
+| Add2Decimal          | .NET 7.0 | 228,013.4294 ns |  3,250.2661 ns |  3,040.3009 ns | 226,790.5029 ns |  1.00 |    0.00 |
+| Add2Decimal          | .NET 8.0 | 229,288.5045 ns |  2,639.3008 ns |  2,339.6714 ns | 228,635.6445 ns |  1.00 |    0.02 |
+| Add2FixedPoint8      | .NET 7.0 |   8,069.9836 ns |    121.3589 ns |    134.8901 ns |   8,040.7883 ns |  1.00 |    0.00 |
+| Add2FixedPoint8      | .NET 8.0 |   6,243.1613 ns |    352.3323 ns |  1,038.8596 ns |   7,010.6266 ns |  0.80 |    0.09 |
+| Add10Int             | .NET 7.0 |   5,613.1340 ns |    296.8058 ns |    875.1386 ns |   5,715.4602 ns |  1.00 |    0.00 |
+| Add10Int             | .NET 8.0 |   5,869.4012 ns |    269.3940 ns |    794.3142 ns |   6,390.8222 ns |  1.07 |    0.23 |
+| Add10Double          | .NET 7.0 |  11,514.3157 ns |     49.0943 ns |     38.3296 ns |  11,526.5663 ns |  1.00 |    0.00 |
+| Add10Double          | .NET 8.0 |  11,532.3924 ns |     74.6589 ns |     69.8360 ns |  11,525.8194 ns |  1.00 |    0.01 |
+| Add10Decimal         | .NET 7.0 | 229,111.6804 ns |  2,872.6561 ns |  2,546.5348 ns | 228,920.4956 ns |  1.00 |    0.00 |
+| Add10Decimal         | .NET 8.0 | 231,055.1585 ns |  4,489.8852 ns |  4,610.7815 ns | 228,706.2988 ns |  1.01 |    0.02 |
+| Add10FixedPoint8     | .NET 7.0 |   8,078.0655 ns |    132.7905 ns |    124.2123 ns |   8,017.0425 ns |  1.00 |    0.00 |
+| Add10FixedPoint8     | .NET 8.0 |   6,213.6527 ns |    359.4805 ns |  1,059.9362 ns |   6,766.8495 ns |  0.78 |    0.12 |
+| Sub2Int              | .NET 7.0 |   5,853.7722 ns |    302.1611 ns |    890.9289 ns |   6,233.7879 ns |  1.00 |    0.00 |
+| Sub2Int              | .NET 8.0 |   5,701.3345 ns |    288.3404 ns |    850.1781 ns |   6,156.5395 ns |  1.00 |    0.23 |
+| Sub2Double           | .NET 7.0 |  11,532.9719 ns |     82.2149 ns |     76.9039 ns |  11,506.2347 ns |  1.00 |    0.00 |
+| Sub2Double           | .NET 8.0 |  11,664.9715 ns |    172.6358 ns |    161.4836 ns |  11,589.2929 ns |  1.01 |    0.01 |
+| Sub2Decimal          | .NET 7.0 | 232,999.6338 ns |  1,680.1366 ns |  1,571.6008 ns | 233,268.7012 ns |  1.00 |    0.00 |
+| Sub2Decimal          | .NET 8.0 | 229,782.5858 ns |  1,778.4805 ns |  1,576.5767 ns | 229,143.6890 ns |  0.99 |    0.01 |
+| Sub2FixedPoint8      | .NET 7.0 |   8,114.4645 ns |    154.9499 ns |    144.9402 ns |   8,119.3253 ns |  1.00 |    0.00 |
+| Sub2FixedPoint8      | .NET 8.0 |   5,958.9486 ns |    308.3495 ns |    909.1755 ns |   5,993.1816 ns |  0.71 |    0.13 |
+| Sub10Int             | .NET 7.0 |   5,750.3535 ns |    293.1852 ns |    864.4632 ns |   6,066.8659 ns |  1.00 |    0.00 |
+| Sub10Int             | .NET 8.0 |   5,845.1612 ns |    258.9527 ns |    763.5280 ns |   6,373.4074 ns |  1.04 |    0.23 |
+| Sub10Double          | .NET 7.0 |  11,493.1770 ns |     47.7358 ns |     39.8616 ns |  11,492.4103 ns |  1.00 |    0.00 |
+| Sub10Double          | .NET 8.0 |  11,622.6581 ns |    141.6178 ns |    132.4694 ns |  11,631.8588 ns |  1.01 |    0.01 |
+| Sub10Decimal         | .NET 7.0 | 228,927.8621 ns |  2,460.0853 ns |  2,301.1653 ns | 227,765.6372 ns |  1.00 |    0.00 |
+| Sub10Decimal         | .NET 8.0 | 227,867.2433 ns |  1,990.4841 ns |  1,764.5123 ns | 226,994.4458 ns |  1.00 |    0.01 |
+| Sub10FixedPoint8     | .NET 7.0 |   7,999.6249 ns |     38.1571 ns |     31.8629 ns |   8,004.5624 ns |  1.00 |    0.00 |
+| Sub10FixedPoint8     | .NET 8.0 |   6,044.5880 ns |    331.1392 ns |    976.3713 ns |   6,734.5013 ns |  0.70 |    0.14 |
 
 
 **Utf8JsonFixedPoint8**
@@ -714,26 +740,44 @@ Int32,Int64と比べても差はほとんどない。
 
 byte[]でReader,Writer,Deserialize,Serializeの比較
 
-|                 Method |       Mean |    Error |   StdDev |
-|----------------------- |-----------:|---------:|---------:|
-|                ReadInt |   396.8 ns |  7.52 ns |  8.66 ns |
-|               ReadLong |   400.5 ns |  7.89 ns | 15.00 ns |
-|             ReadDouble | 1,793.0 ns | 34.33 ns | 30.43 ns |
-|        ReadFixedPoint8 |   446.5 ns |  8.78 ns | 12.59 ns |
-|         DeserializeInt |   816.0 ns | 16.06 ns | 24.52 ns |
-|        DeserializeLong |   831.9 ns | 16.53 ns | 23.70 ns |
-|      DeserializeDouble | 2,187.1 ns | 43.16 ns | 56.12 ns |
-|     DeserializeDecimal | 2,360.5 ns | 45.31 ns | 53.94 ns |
-| DeserializeFixedPoint8 |   824.5 ns | 15.96 ns | 14.93 ns |
-|               WriteInt |   172.4 ns |  3.46 ns |  8.88 ns |
-|              WriteLong |   163.5 ns |  3.29 ns |  5.93 ns |
-|            WriteDouble | 1,301.8 ns | 25.96 ns | 41.93 ns |
-|       WriteFixedPoint8 |   151.5 ns |  2.06 ns |  1.83 ns |
-|           SerializeInt |   630.3 ns | 12.45 ns | 13.84 ns |
-|          SerializeLong |   646.4 ns | 12.66 ns | 21.49 ns |
-|        SerializeDouble | 1,916.9 ns | 37.70 ns | 40.33 ns |
-|       SerializeDecimal | 1,793.2 ns | 29.51 ns | 24.64 ns |
-|   SerializeFixedPoint8 |   667.8 ns | 11.17 ns | 10.45 ns |
+| Method                 | Runtime  | Mean       | Error    | StdDev   | Median     | Ratio | RatioSD |
+|----------------------- |--------- |-----------:|---------:|---------:|-----------:|------:|--------:|
+| ReadInt                | .NET 7.0 |   130.2 ns |  2.71 ns |  7.98 ns |   134.1 ns |  1.00 |    0.00 |
+| ReadInt                | .NET 8.0 |   113.0 ns |  2.96 ns |  8.72 ns |   118.0 ns |  0.87 |    0.09 |
+| ReadLong               | .NET 7.0 |   126.2 ns |  2.54 ns |  6.37 ns |   128.9 ns |  1.00 |    0.00 |
+| ReadLong               | .NET 8.0 |   106.7 ns |  2.22 ns |  6.50 ns |   108.5 ns |  0.85 |    0.07 |
+| ReadDouble             | .NET 7.0 | 1,475.4 ns | 29.43 ns | 27.52 ns | 1,474.1 ns |  1.00 |    0.00 |
+| ReadDouble             | .NET 8.0 |   645.2 ns | 10.73 ns | 10.04 ns |   644.3 ns |  0.44 |    0.01 |
+| ReadFixedPoint8        | .NET 7.0 |   162.8 ns |  3.27 ns |  7.63 ns |   165.4 ns |  1.00 |    0.00 |
+| ReadFixedPoint8        | .NET 8.0 |   157.8 ns |  3.15 ns |  5.08 ns |   158.8 ns |  0.96 |    0.05 |
+| DeserializeInt         | .NET 7.0 |   834.3 ns | 16.55 ns | 30.68 ns |   830.0 ns |  1.00 |    0.00 |
+| DeserializeInt         | .NET 8.0 |   702.8 ns | 10.28 ns |  9.61 ns |   703.3 ns |  0.84 |    0.04 |
+| DeserializeLong        | .NET 7.0 |   795.9 ns | 15.73 ns | 25.40 ns |   798.6 ns |  1.00 |    0.00 |
+| DeserializeLong        | .NET 8.0 |   710.5 ns | 13.43 ns | 13.79 ns |   703.8 ns |  0.89 |    0.03 |
+| DeserializeDouble      | .NET 7.0 | 2,414.8 ns | 45.77 ns | 61.11 ns | 2,410.4 ns |  1.00 |    0.00 |
+| DeserializeDouble      | .NET 8.0 | 1,302.8 ns | 16.91 ns | 15.81 ns | 1,298.2 ns |  0.54 |    0.01 |
+| DeserializeDecimal     | .NET 7.0 | 2,337.6 ns | 46.32 ns | 76.11 ns | 2,341.6 ns |  1.00 |    0.00 |
+| DeserializeDecimal     | .NET 8.0 | 2,052.8 ns | 39.57 ns | 50.04 ns | 2,069.0 ns |  0.89 |    0.03 |
+| DeserializeFixedPoint8 | .NET 7.0 |   834.8 ns | 16.03 ns | 19.08 ns |   833.5 ns |  1.00 |    0.00 |
+| DeserializeFixedPoint8 | .NET 8.0 |   763.5 ns | 14.82 ns | 13.14 ns |   764.6 ns |  0.92 |    0.03 |
+| WriteInt               | .NET 7.0 |   159.3 ns |  2.76 ns |  3.39 ns |   158.3 ns |  1.00 |    0.00 |
+| WriteInt               | .NET 8.0 |   151.4 ns |  1.78 ns |  1.58 ns |   151.1 ns |  0.95 |    0.03 |
+| WriteLong              | .NET 7.0 |   165.8 ns |  3.35 ns |  9.66 ns |   161.0 ns |  1.00 |    0.00 |
+| WriteLong              | .NET 8.0 |   187.2 ns |  1.12 ns |  0.99 ns |   187.2 ns |  1.14 |    0.07 |
+| WriteDouble            | .NET 7.0 | 1,347.3 ns | 25.72 ns | 35.21 ns | 1,360.8 ns |  1.00 |    0.00 |
+| WriteDouble            | .NET 8.0 |   817.6 ns | 16.04 ns | 16.48 ns |   814.1 ns |  0.61 |    0.02 |
+| WriteFixedPoint8       | .NET 7.0 |   153.1 ns |  2.25 ns |  2.11 ns |   152.9 ns |  1.00 |    0.00 |
+| WriteFixedPoint8       | .NET 8.0 |   150.6 ns |  0.74 ns |  0.61 ns |   150.7 ns |  0.98 |    0.01 |
+| SerializeInt           | .NET 7.0 |   679.6 ns | 13.43 ns | 19.27 ns |   679.0 ns |  1.00 |    0.00 |
+| SerializeInt           | .NET 8.0 |   610.7 ns | 12.06 ns | 18.06 ns |   615.6 ns |  0.90 |    0.04 |
+| SerializeLong          | .NET 7.0 |   657.1 ns | 13.10 ns | 23.62 ns |   652.0 ns |  1.00 |    0.00 |
+| SerializeLong          | .NET 8.0 |   689.1 ns | 12.00 ns | 11.22 ns |   688.9 ns |  1.03 |    0.04 |
+| SerializeDouble        | .NET 7.0 | 1,897.7 ns | 27.49 ns | 22.95 ns | 1,906.6 ns |  1.00 |    0.00 |
+| SerializeDouble        | .NET 8.0 | 1,364.1 ns | 27.09 ns | 40.54 ns | 1,368.9 ns |  0.72 |    0.02 |
+| SerializeDecimal       | .NET 7.0 | 1,838.4 ns | 36.08 ns | 46.92 ns | 1,846.1 ns |  1.00 |    0.00 |
+| SerializeDecimal       | .NET 8.0 | 1,589.5 ns | 31.23 ns | 32.07 ns | 1,589.3 ns |  0.87 |    0.03 |
+| SerializeFixedPoint8   | .NET 7.0 |   719.8 ns | 14.06 ns | 15.63 ns |   716.9 ns |  1.00 |    0.00 |
+| SerializeFixedPoint8   | .NET 8.0 |   646.3 ns | 12.40 ns | 10.99 ns |   643.2 ns |  0.90 |    0.02 |
 
 ■ **Api定義**
 
@@ -815,39 +859,39 @@ byte[]でReader,Writer,Deserialize,Serializeの比較
 |TryWriteUtf8(Span&lt;byte&gt; ,out int)|引数の値をutf8に書き換えます。失敗時はfalseを返します|
 |Equals(object?)|自分自身とobjectが等しいかどうかを返します|
 |Equals(FixedPoint8)|自分自身と引数の値が等しいかどうかを返します|
-|GetHashCode()|この値のハッシュコードを返します|
-|CompareTo(object?)|この値の指定されたobjectと比較し、objectより小さければ-1,同じなら0,大きければ1を返します|
-|CompareTo(FixedPoint8)|この値の指定されたFixedPoint8と比較し、小さければ-1,同じなら0,大きければ1を返します|
+|GetHashCode()|ハッシュコードを返します|
+|CompareTo(object?)|objectよりも小さければ-1,同じなら0,大きければ1を返します|
+|CompareTo(FixedPoint8)|FixedPoint8よりも小さければ-1,同じなら0,大きければ1を返します|
 |Abs(FixedPoint8)|FixedPoint8の絶対値を返します|
 |IsCanonical(FixedPoint8)|trueを返します|
 |IsComplexNumber(FixedPoint8)|falseを返します|
-|IsEvenInteger(FixedPoint8)|値が偶数の整数かどうかを判断します。違う場合はfalseを返します|
+|IsEvenInteger(FixedPoint8)|偶数の整数かどうかを判断します。違う場合はfalseを返します|
 |IsFinite(FixedPoint8)|trueを返します|
 |IsImaginaryNumber(FixedPoint8)|falseを返します|
 |IsInfinity(FixedPoint8)|falseを返します|
-|IsInteger(FixedPoint8)|値が整数かどうかを判断します。違う場合はfalseを返します|
+|IsInteger(FixedPoint8)|整数かどうかを判断します。違う場合はfalseを返します|
 |IsNaN(FixedPoint8)|falseを返します|
-|IsNegative(FixedPoint8)|値が負かどうかを返します|
+|IsNegative(FixedPoint8)|負かどうかを返します|
 |IsNegativeInfinity(FixedPoint8)|falseを返します|
-|IsNormal(FixedPoint8)|値が0ならfalseを返します。違う場合はtrueを返します|
-|IsOddInteger(FixedPoint8)|値が奇数の整数かどうかを判断します。違う場合はfalseを返します|
-|IsPositive(FixedPoint8)|値が正かどうかを返します|
+|IsNormal(FixedPoint8)|0ならfalseを返します。違う場合はtrueを返します|
+|IsOddInteger(FixedPoint8)|奇数の整数かどうかを判断します。違う場合はfalseを返します|
+|IsPositive(FixedPoint8)|正かどうかを返します|
 |IsPositiveInfinity(FixedPoint8)|falseを返します|
 |IsRealNumber(FixedPoint8)|trueを返します|
 |IsSubnormal(FixedPoint8)|falseを返します|
-|IsZero(FixedPoint8)|値が0かどうかを返します|
-|MaxMagnitude(FixedPoint8, FixedPoint8)|値を比較して大きい方の値を返します|
-|MaxMagnitudeNumber(FixedPoint8, FixedPoint8)|値を比較して大きい方の値を返します|
-|MinMagnitude(FixedPoint8, FixedPoint8)|値を比較して小さい方の値を返します|
-|MinMagnitudeNumber(FixedPoint8, FixedPoint8)|値を比較して小さい方の値を返します|
-|Round()|整数に値を丸めます。丸め方法は四捨五入で0.5の時はは1つ上の桁が偶数になるように丸めます(銀行丸め)|
-|Round(int)|指定した小数点以下の桁数に値を丸めます。丸め方法は四捨五入で0.5の時はは1つ上の桁が偶数になるように丸めます(銀行丸め)|
-|Floor()|整数に値を丸めます。丸め方法は負の最大値に近づくように丸めます|
-|Floor(int)|指定した小数点以下の桁数に値を丸めます。丸め方法は負の最大値に近づくように丸めます|
-|Truncate()|整数に値を丸めます。丸め方法は0に近づくように丸めます|
-|Truncate(int)|指定した小数点以下の桁数に値を丸めます。丸め方法は0に近づくように丸めます|
-|Ceiling()|整数に値を丸めます。丸め方法は正の最大値に近づくように丸めます|
-|Ceiling(int)|指定した小数点以下の桁数に値を丸めます。丸め方法は正の最大値に近づくように丸めます|
+|IsZero(FixedPoint8)|0かどうかを返します|
+|MaxMagnitude(FixedPoint8, FixedPoint8)|比較して大きい方の値を返します|
+|MaxMagnitudeNumber(FixedPoint8, FixedPoint8)|比較して大きい方の値を返します|
+|MinMagnitude(FixedPoint8, FixedPoint8)|比較して小さい方の値を返します|
+|MinMagnitudeNumber(FixedPoint8, FixedPoint8)|比較して小さい方の値を返します|
+|Round()|整数に丸めます。丸め方法は四捨五入で0.5の時はは1つ上の桁が偶数になるように丸めます(銀行丸め)|
+|Round(int)|小数点以下を指定した桁数に丸めます。丸め方法は四捨五入で0.5の時はは1つ上の桁が偶数になるように丸めます(銀行丸め)|
+|Floor()|整数に丸めます。丸め方法は負の最大値に近づくように丸めます|
+|Floor(int)|小数点以下を指定した桁数に丸めます。丸め方法は負の最大値に近づくように丸めます|
+|Truncate()|整数に丸めます。丸め方法は0に近づくように丸めます|
+|Truncate(int)|小数点以下を指定した桁数に丸めます。丸め方法は0に近づくように丸めます|
+|Ceiling()|整数に丸めます。丸め方法は正の最大値に近づくように丸めます|
+|Ceiling(int)|小数点以下を指定した桁数に丸めます。丸め方法は正の最大値に近づくように丸めます|
 
 
 ■ 実装説明
