@@ -86,6 +86,7 @@ namespace Gitan.FixedPoint8.Tests
         }
 
         /////////////////////////////////////// WriteCharsUtf8IBufferWriter
+        
         [TestMethod()]
         public void WriteUtf8CharsIbufferWriterTest()
         {

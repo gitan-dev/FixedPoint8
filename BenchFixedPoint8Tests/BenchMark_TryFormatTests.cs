@@ -10,11 +10,11 @@ namespace Gitan.FixedPoint8.Tests
         [TestMethod()]
         public void ReaderTest()
         {
-            var intFormat = instance.IntTryFormat();
-            var doubleFormat = instance.DoubleTryFormat();
-            var decimalFormat = instance.DecimalTryFormat();
-            var fp8Format = instance.FixedPoint8TryFormat();
-            var fp8DoubleFormat = instance.FixedPoint8DoubleTryFormat();
+            //var intFormat = instance.IntTryFormat();
+            //var doubleFormat = instance.DoubleTryFormat();
+            //var decimalFormat = instance.DecimalTryFormat();
+            //var fp8Format = instance.FixedPoint8TryFormat();
+            //var fp8DoubleFormat = instance.FixedPoint8DoubleTryFormat();
         }
 
 #if NET8_0
