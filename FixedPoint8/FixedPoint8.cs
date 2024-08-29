@@ -1836,6 +1836,12 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>, IMinMaxValue<FixedPoi
         return new FixedPoint8(left.InnerValue * (long)right);
     }
 
+    public static FixedPoint8 operator *(FixedPoint8 left, double right)
+    {
+        var doubleLeft = (double)(left.InnerValue) / InnerPower;
+        return FixedPoint8.FromDouble(doubleLeft * right);
+    }
+
     //速度が出ないので使用は推奨しない
     public static FixedPoint8 operator *(FixedPoint8 left, FixedPoint8 right)
     {
@@ -1915,7 +1921,6 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>, IMinMaxValue<FixedPoi
     {
         return new FixedPoint8(-value.InnerValue);
     }
-
 
     // ****************************************
     // その他
