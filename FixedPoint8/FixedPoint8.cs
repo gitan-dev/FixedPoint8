@@ -523,7 +523,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>, IMinMaxValue<FixedPoi
     {
         Span<char> buffer = stackalloc char[21];
 
-        int charsWritten = WriteChars(ref buffer);
+        int charsWritten = WriteCharsUnsafe(ref buffer);
         return new string(buffer[..charsWritten]);
     }   
 
@@ -538,7 +538,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>, IMinMaxValue<FixedPoi
     {
         Span<byte> buffer = stackalloc byte[21];
 
-        int charsWritten = WriteUtf8(ref buffer);
+        int charsWritten = WriteUtf8Unsafe(ref buffer);
         return buffer[..charsWritten].ToArray();
     }
 
@@ -551,7 +551,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>, IMinMaxValue<FixedPoi
         }
         if (destination.Length >= 21)
         {
-            charsWritten = WriteChars(ref destination);
+            charsWritten = WriteCharsUnsafe(ref destination);
             return true;
         }
         else
@@ -570,7 +570,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>, IMinMaxValue<FixedPoi
         }
         if (destination.Length >= 21)
         {
-            charsWritten = WriteUtf8(ref destination);
+            charsWritten = WriteUtf8Unsafe(ref destination);
             return true;
         }
         else
@@ -580,8 +580,16 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>, IMinMaxValue<FixedPoi
     }
 #endif
 
+    public int WriteChars(Span<char> destination)
+    {
+        if (TryWriteChars(destination, out var charsWritten) == false)
+        {
+            throw new ArgumentException("Not enough destination");
+        }
+        return charsWritten;
+    }
 
-    public int WriteChars(ref Span<char> destination)
+    public int WriteCharsUnsafe(ref Span<char> destination)
     {
         int offset = 0;
 
@@ -847,11 +855,20 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>, IMinMaxValue<FixedPoi
     {
         var buffer = writer.GetSpan(21);
 
-        int charsWritten = WriteChars(ref buffer);
+        int charsWritten = WriteCharsUnsafe(ref buffer);
         writer.Advance(charsWritten);
     }
 
-    public int WriteUtf8(ref Span<byte> destination)
+    public int WriteUtf8(Span<byte> destination)
+    {
+        if (TryWriteUtf8(destination, out var charsWritten) == false)
+        {
+            throw new ArgumentException("Not enough destination");
+        }
+        return charsWritten;
+    }
+
+    public int WriteUtf8Unsafe(ref Span<byte> destination)
     {
         int offset = 0;
 
@@ -1117,7 +1134,7 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>, IMinMaxValue<FixedPoi
     {
         var buffer = writer.GetSpan(21);
 
-        int charsWritten = WriteUtf8(ref buffer);
+        int charsWritten = WriteUtf8Unsafe(ref buffer);
         writer.Advance(charsWritten);
     }
 
