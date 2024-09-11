@@ -1384,7 +1384,7 @@ public class FixedPoint8Tests
             var result = fp8.TryWriteUtf8(buffer, out int charsWritten);
             Assert.IsTrue(result);
 
-            var value = fp8.WriteUtf8(ref buffer);
+            var value = fp8.WriteUtf8Unsafe(ref buffer);
             offset += value;
 
             var decimalString = item.ToString();
