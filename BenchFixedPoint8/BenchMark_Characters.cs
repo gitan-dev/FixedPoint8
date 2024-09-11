@@ -275,7 +275,7 @@ public class BenchMark_Characters
         foreach (var value in _fp8Values)
         {
             var dest = _charBuffer.AsSpan(offset);
-            var charsWritten = value.WriteChars(ref dest);
+            var charsWritten = value.WriteCharsUnsafe(ref dest);
             offset += charsWritten;
         }
         return (_charBuffer, offset);
@@ -316,7 +316,7 @@ public class BenchMark_Characters
         foreach (var value in _fp8Values)
         {
             var dest = _byteBuffer.AsSpan(offset);
-            var charsWritten = value.WriteUtf8(ref dest);
+            var charsWritten = value.WriteUtf8Unsafe(ref dest);
             offset += charsWritten;
         }
 

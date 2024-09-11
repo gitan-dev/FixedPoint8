@@ -130,7 +130,7 @@ public class BenchMark_TryFormat
     {
         Span<byte> buffer = _byteBuffer;
 
-        return fp8Double.WriteUtf8(ref buffer);
+        return fp8Double.WriteUtf8Unsafe(ref buffer);
     }
 
     [Benchmark]
