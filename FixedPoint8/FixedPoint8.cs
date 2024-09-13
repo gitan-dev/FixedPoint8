@@ -32,6 +32,10 @@ public readonly struct FixedPoint8 : INumber<FixedPoint8>, IMinMaxValue<FixedPoi
         InnerValue = innerValue;
     }
 
+    public static ReadOnlySpan<byte> TableUtf8 => _tableUtf8;
+
+    public static ReadOnlySpan<char> TableChar => _tableChar;
+
     // ****************************************
     // FixedPoint8への変換(数値系)
     // **************************************** 
